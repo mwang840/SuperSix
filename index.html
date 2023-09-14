@@ -2,10 +2,26 @@
 <head>
   <meta charset="UTF-8">
   <title>SuperSix</title>
+    <script type="text/javascript" charset="utf-8">
+    var sheetIndex = 0;
+    var sheets = [
+    "/css/AIGenerated.css",
+    "/css/pixel.css",
+    "/css/pokemon.css",
+    "/css/professors.css"];
+    var nextSheet = function(){
+        sheetIndex = (sheetIndex + 1) % sheets.length;
+        var newHref = sheets[sheetIndex];
+        document.getElementById('currentstyle').innerHTML = newHref;
+        document.getElementById('pagestyle').setAttribute('href', newHref);
+    }
+    </script>
 </head>
 <body>
     <h1 id="system-message">Generic template</h1>
-
+    <p id="stylechange" onclick="nextSheet()">
+      Click here to change the theme <span id="currentstyle">AIGenerated.css</span>
+    </p>
     <div class="logged-in-user" hidden>
         <div>Welcome, </div>
         <button>Sign out</button>
