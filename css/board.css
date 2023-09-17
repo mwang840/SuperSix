@@ -1,0 +1,10 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(8, 12vmax);
+  grid-template-rows: repeat(8, 12vmax);
+  height: 100vh;
+}
+
+.square {
+    border: 1px solid grey;
+}
