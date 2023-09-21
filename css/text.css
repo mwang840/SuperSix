@@ -1,0 +1,6 @@
+.button{
+    background-color: gray;
+    border-style: groove;
+    width: fit-content;
+    padding: 3px;
+  }
