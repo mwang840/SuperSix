@@ -2,20 +2,8 @@
 <head>
   <meta charset="UTF-8">
   <title>SuperSix</title>
-    <script type="text/javascript" charset="utf-8">
-    var sheetIndex = 0;
-    var sheets = [
-    "/css/AIGenerated.css",
-    "/css/pixel.css",
-    "/css/pokemon.css",
-    "/css/professors.css"];
-    var nextSheet = function(){
-        sheetIndex = (sheetIndex + 1) % sheets.length;
-        var newHref = sheets[sheetIndex];
-        document.getElementById('currentstyle').innerHTML = newHref;
-        document.getElementById('pagestyle').setAttribute('href', newHref);
-    }
-    </script>
+    <script type="text/javascript" charset="utf-8" src="site.js"></script>
+
 </head>
 <body>
     <h1 id="system-message">Generic template</h1>
@@ -25,20 +13,6 @@
     <div class="logged-in-user" hidden>
         <div>Welcome, </div>
         <button>Sign out</button>
-    </div>
-    <div>
-        <form id='nameform' action="profile/">
-            <div class='form-group'>
-                <label for='user'>Email Address:</label>
-                <input id='user' type='text' class='form-control' required>
-            </div>
-            <div class='form-group'>
-              <label for='password'>Password:</label>
-              <input id='password' type='text' class='form-control' required>
-            </div>
-            <label>New here? Sign up </label><button onclick="window.location.href= 'sign-up/'; ">Sign up</button><button>Sign in</button>
-      
-          </form>      
     </div>
 </body>
 </html>
