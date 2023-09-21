@@ -7,21 +7,26 @@
     <h1 id="system-message">Super Six Chess</h1>
 
     <div class="logged-in-user" hidden>
-        <h2>Welcome, User</h2>
+        <div>Welcome, </div>
         <button>Sign out</button>
     </div>
     <div>
-        <form id='nameform' action="profile/">
+        <form id='nameform' >
             <div class='form-group'>
                 <label for='user'>Email Address:</label>
-                <input id='user' type='text' class='form-control' required>
+                <input id='user' type='text' class='form-control' >
             </div>
             <div class='form-group'>
               <label for='password'>Password:</label>
-              <input id='password' type='text' class='form-control' required>
+              <input id='password' type='text' class='form-control' >
             </div>
-          <button>Create Account</button>    
+            <label>New here? Sign up </label><button onclick="window.location.replace = 'sign-up/'; ">Sign up</button><input type='submit' id='go' value='Sign in' onclick="window.location.replace = '/'; "> 
+
           </form>      
     </div>
 </body>
 </html>
+<script>
+
+
+</script>
