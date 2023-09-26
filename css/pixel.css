@@ -1,0 +1,45 @@
+
+@font-face {
+    font-family: "myFirstFont";
+    src: URL('PublicPixel-eZPz6.ttf') format('truetype'); /* font from https://www.cdnfonts.com/public-pixel.font */
+}
+  
+body {
+    font-family: "myFirstFont"; 
+    font-size: 10px;
+    background-color: #464141;
+    color: white;
+}
+ul.navBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+  }
+  .navBar li {
+    list-style-type: none;
+    float: left;
+    width: 20%;
+  }
+  .navBar li {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border: black;
+    border-style: solid;
+    width: 20%;
+    box-sizing: border-box;
+  }
+  .navBar li:hover {
+    background-color: #111;
+  }
+  .navBar li:hover.blank {
+    background-color: #333;
+  }
