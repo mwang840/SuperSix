@@ -3,12 +3,19 @@
   <meta charset="UTF-8">
   <title>SuperSix</title>
   <script type="text/javascript" charset="utf-8" src="site.js"></script>
+  <link id="pagestyle" rel="stylesheet" type="text/css" href="/css/AIGenerated.css">
 </head>
 <body>
+  <ul class="navBar">
+    <li class="blank">Select a Theme:</li>
+    <li id="stylechange" onclick="changeSheet(0)">AIGenerated</li>
+    <li id="stylechange" onclick="changeSheet(1)">Pixel</li>
+    <li id="stylechange" onclick="changeSheet(2)">Professors</li>
+    <li id="stylechange" onclick="changeSheet(3)">Text</li>
+  </ul>
+  <br>
+  <br>
     <h1 id="system-message">Generic template</h1>
-    <p id="stylechange" onclick="nextSheet()">
-      Click here to change the theme <span id="currentstyle">AIGenerated.css</span>
-    </p>
     <div class="logged-in-user" hidden>
         <div>Welcome, </div>
         <button>Sign out</button>
