@@ -10,8 +10,7 @@ body {
     background-color: #464141;
     color: white;
 }
-ul.navBar {
-    position: fixed;
+ul.styleBar {
     top: 0;
     left: 0;
     width: 100%;
@@ -21,12 +20,12 @@ ul.navBar {
     overflow: hidden;
     background-color: #333;
   }
-  .navBar li {
+  .styleBar li {
     list-style-type: none;
     float: left;
     width: 20%;
   }
-  .navBar li {
+  .styleBar li {
     display: block;
     color: white;
     text-align: center;
@@ -37,9 +36,9 @@ ul.navBar {
     width: 20%;
     box-sizing: border-box;
   }
-  .navBar li:hover {
+  .styleBar li:hover {
     background-color: #111;
   }
-  .navBar li:hover.blank {
+  .styleBar li:hover.blank {
     background-color: #333;
   }
