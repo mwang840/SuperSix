@@ -3,6 +3,13 @@
     font-family: "myFirstFont";
     src: URL('PublicPixel-eZPz6.ttf') format('truetype'); /* font from https://www.cdnfonts.com/public-pixel.font */
 }
+
+.gamePiece img {
+  background-position: center; /* <-- background position */
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
   
 body {
     font-family: "myFirstFont"; 
