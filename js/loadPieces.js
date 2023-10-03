@@ -2,7 +2,6 @@ function populate_grid(){
 
     addChessPieces("black");
     addPawns("black");
-
     for (var k=0; k<4; k++){
         for (var l=0; l<8; l++){
             if (l % 2 == 0){
@@ -15,7 +14,6 @@ function populate_grid(){
     }
     addPawns("white");
     addChessPieces("white");
-
 }
 
 function addPieceToGrid(className, color, piece){
