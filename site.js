@@ -5,5 +5,12 @@ var sheets = [
 "css/text.css"];
 var changeSheet = function(style){
     var newHref = sheets[style];
-    document.getElementById('pagestyle').setAttribute('href', newHref); 
+    const url = window.location.href;
+    const pathParts = url.split('/');
+    if (pathParts[pathParts.length - 2] == "sign-up") {
+        document.getElementById('pagestyle').setAttribute('href',"../" + newHref);
+    }
+    else {
+        document.getElementById('pagestyle').setAttribute('href', newHref);
+    } 
 }
