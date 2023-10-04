@@ -6,7 +6,7 @@
   grid-template-rows: repeat(8, 8vmax);
   background-color: transparent;
   box-sizing: border-box;
-  padding: 10px;
+  padding: 300px;
   /* grid-template-columns: 70px 70px;
   grid-template-rows: 70px 70px; */
 }
