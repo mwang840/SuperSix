@@ -1,50 +1,76 @@
+
 function populate_grid(){
 
     addChessPieces("black");
     addPawns("black");
-    for (var k=0; k<4; k++){
-        for (var l=0; l<8; l++){
+    for (var k = 0; k < 4; k++){
+        var row = "C";
+        if (k == 1) {
+            row = "D";
+        } else if (k == 2) {
+            row = "E";
+        } else if (k == 3) {
+            row = "F";
+        }
+        for (var l = 0; l < 8; l++){
             if (l % 2 == 0){
-                addBlankSpaceToGrid("you");
+                addBlankSpaceToGrid("you", row + (l + 1).toString());
             }
             else{
-                addBlankSpaceToGrid("dee");
+                addBlankSpaceToGrid("dee", row + (l + 1).toString());
             }
         }
     }
     addPawns("white");
     addChessPieces("white");
+    movePiece();
 }
 
-function addPieceToGrid(className, color, piece){
-    document.getElementsByClassName("grid")[0].innerHTML += `<div class="` + className + `"><img width="70px" height="70px" src="images/pixel-pieces/` + color + `-` + piece + `.png">`; //there's only one grid
+function addPieceToGrid(className, color, piece, id){
+    document.getElementsByClassName("grid")[0].innerHTML += `<div class="is-piece ` + className + `" id="` + id + `"><img width="70px" height="70px" src="images/pixel-pieces/` + color + `-` + piece + `.png">`; //there's only one grid
 }
 
-function addBlankSpaceToGrid(className){
-    document.getElementsByClassName("grid")[0].innerHTML += `<div class="` + className + `">`;
+function addBlankSpaceToGrid(className, id){
+    document.getElementsByClassName("grid")[0].innerHTML += `<div class="not-piece ` + className + `" id="` + id + `"><img width="70px" height="70px" src="images/pixel-pieces/blank.png">`;
 }
 
 function addPawns(color){
-    for (var j=0; j < 8; j++){
-        if (j % 2 == 0){
-            addPieceToGrid("you", color, "pawn");
-        }
-        else {
-            addPieceToGrid("dee", color, "pawn");
+    for (var j = 0; j < 8; j++){
+        if (color == "black") {
+            if (j % 2 == 0){
+                addPieceToGrid("you", color, "pawn", 'B' + (j+1).toString());
+            }
+            else {
+                addPieceToGrid("dee", color, "pawn", 'B' + (j+1).toString());
+            }
+        } else {
+            if (j % 2 == 0){
+                addPieceToGrid("you", color, "pawn", 'G' + (j+1).toString());
+            }
+            else {
+                addPieceToGrid("dee", color, "pawn", 'G' + (j+1).toString());
+            }
         }
     }
 }
 
 function addChessPieces(color){
     pieces = ["rook", "knight", "bishop", "queen", "king", "bishop", "knight", "rook"];
-    for (var i=0; i<pieces.length; i++){
-        if (i % 2 == 0){
-            addPieceToGrid("you", color, pieces[i]);
-        }
-        else {
-            addPieceToGrid("dee", color, pieces[i]);
+    for (var i = 0; i < 8; i++){
+        if (color == "black") {
+            if (i % 2 == 0){
+                addPieceToGrid("you", color, pieces[i], 'A' + (i+1).toString());
+            }
+            else {
+                addPieceToGrid("dee", color, pieces[i], 'A' + (i+1).toString());
+            } 
+        } else {
+            if (i % 2 == 0){
+                addPieceToGrid("you", color, pieces[i], 'H' + (i+1).toString());
+            }
+            else {
+                addPieceToGrid("dee", color, pieces[i], 'H' + (i+1).toString());
+            }
         }
     }
-
-
 }

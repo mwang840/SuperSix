@@ -6,7 +6,6 @@ body {
 }
 
 header {
-    background-color: #333;
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -81,3 +80,54 @@ ul.styleBar {
   .styleBar li:hover.blank {
     background-color: #2196F3;
   }
+  /*Found this code on how to make an n by n grid from this link. https://stackoverflow.com/questions/58572896/create-a-css-grid-with-nn-squares */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(8, 12vmax);
+    grid-template-rows: repeat(8, 12vmax);
+    height: 100vh;
+    padding: 10px;
+    background-color: transparent;
+  }
+  
+  .grid > .you, .grid > .dee {
+      border: 3px black solid;
+  }
+  
+  .you {
+    background-color: yellow;
+  }
+  
+  .dee{
+    background-color: blue;
+  }
+  
+  h1{
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+  
+  .accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+  }
+  
+  .active, .accordion:hover {
+    background-color: #ccc; 
+  }
+  
+  .panel {
+    padding: 0 18px;
+    display: none;
+    background-color: white;
+    overflow: hidden;
+  }
+  
