@@ -16,6 +16,4 @@ function allowDrop(ev) {
     //console.log(ev.srcElement);
     //console.log(ev.toElement);
     ev.target.appendChild(document.getElementById(data));
-
-    //ev.target.appendChild(data)
   }
