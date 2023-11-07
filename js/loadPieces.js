@@ -32,7 +32,7 @@ function addPieceToGrid(className, color, piece, id){
 }
 
 function addBlankSpaceToGrid(className, id){
-    document.getElementsByClassName("grid")[0].innerHTML += `<div class="not-piece ` + className + `" id="` + id + `" ondragover="allowDrop(event)" ><img width="70px" height="70px" src="images/pixel-pieces/blank.png" ondragover="allowDrop(event)">`;
+    document.getElementsByClassName("grid")[0].innerHTML += `<div class="not-piece ` + className + `" id="` + id + `" ondragover="allowDrop(event)">`; //<img width="70px" height="70px" src="images/pixel-pieces/blank.png" ondragover="allowDrop(event)">`;
 }
 
 function addPawns(color){
