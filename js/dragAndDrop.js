@@ -4,15 +4,18 @@ function allowDrop(ev) {
   
   function drag(ev) {
     console.log(ev.target);
-    ev.dataTransfer.setData("text/html", ev.target);
+    ev.dataTransfer.setData("text", ev.target.id);
   }
   
   function drop(ev) {
     ev.preventDefault();
-    var data = ev.dataTransfer.getData("text/html");
+    var data = ev.dataTransfer.getData("text");
     console.log("data -> " + data);
-    ev.target.innerHtml = data;
-    console.log(ev.target);
-    ev.target.innerHtml = ``;
-    //ev.target.innerHtml = (document.getElementById(ev.target));
+    //console.log(ev)
+    //console.log(ev.target);
+    //console.log(ev.srcElement);
+    //console.log(ev.toElement);
+    ev.target.appendChild(document.getElementById(data));
+
+    //ev.target.appendChild(data)
   }
