@@ -11,7 +11,6 @@ function allowDrop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text/html");
     console.log("data -> " + data);
-    //console.log("What is NULL? " + document.getElementById(data));
     ev.target.innerHtml = data;
     console.log(ev.target);
     ev.target.innerHtml = ``;
