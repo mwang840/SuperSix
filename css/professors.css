@@ -40,7 +40,8 @@ ul.styleBar {
   display: grid;
   grid-template-columns: repeat(8, 6vmax);
   grid-template-rows: repeat(8, 5vmax);
-  height: 100vh;
+  height: 80px;
+  width: 80px;
   padding: 10px;
   background-color: transparent;
 }
