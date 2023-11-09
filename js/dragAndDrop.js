@@ -15,22 +15,26 @@ function allowDrop(ev) {
     //console.log(ev.target);
     //console.log(ev.srcElement);
     //console.log(ev.toElement);
-    var item =  ev.target.firstElementChild;
+    
+    var item =  ev.target.firstElementChild; //item being dropped
     if (item){
 
-      //sconsole.log("item -> " + item);
-      console.log("###################################");
-      console.log("event.target.firstElementChild -> ");
-      console.log(item);
-      console.log("###################################");
-      console.log("event.target -> ")
-      console.log(ev.target);
-      console.log("###################################");
+      //console.log("###################################");
+      var sittingItem = ev.target;
+      var sittingItemId = ev.target.id;
+      //console.log("sitting item ");
+      //console.log(sittingItem);
+      //console.log("parent div");
+      let parentDiv = sittingItem.parentNode;
+      //console.log(parentDiv);
+      document.getElementById(sittingItemId).remove();
+      //console.log("###################################");
       var current_piece = ev.target.removeChild(item);
-      console.log("Piece that is currently in the spot -> ");
-      console.log(current_piece);
-      //return;
+      parentDiv.appendChild(current_piece);
+      //console.log(current_piece);
+      //ev.target.parent.appendChild(document.getElementById(data));
+      return;
     }
-
+    console.log(data);
     ev.target.appendChild(document.getElementById(data));
   }
