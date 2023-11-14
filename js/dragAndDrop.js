@@ -19,40 +19,36 @@ function allowDrop(ev) {
     var item =  ev.target.firstElementChild; //item being dropped
     if (item){
 
-      console.log("###################################");
+      //console.log("###################################");
       var sittingItem = ev.target;
-      console.log("***");
-      console.log(ev.target)
-      console.log("***");
+      //console.log("***");
+      //console.log(ev.target)
+      //console.log("***");
 
       var sittingItemId = ev.target.id;
       //console.log("sitting item ");
       //console.log(sittingItem);
       //console.log("parent div");
       let parentDiv = sittingItem.parentNode;
-      console.log(parentDiv);
+      //console.log(parentDiv);
       if (parentDiv.getAttribute("class") === "grid"){
         console.log("Skipping Drop onto undroppable area");
         return;
       }
       document.getElementById(sittingItemId).remove();
-      console.log("###################################");
-      console.log(sittingItemId.indexOf(".png"));
+      //console.log("###################################");
+      //console.log(sittingItemId.indexOf(".png"));
       
       if (sittingItemId.indexOf(".png") > -1){
-            console.log("Piece was likely dropped on a non droppable div");
+            console.log("Piece was likely dropped onto another piece");
             current_piece = ev.target.removeChild(item);
             parentDiv.appendChild(current_piece);
       }
 
       //console.log(current_piece);
       //ev.target.parent.appendChild(document.getElementById(data));
-      console.log(getPieceLocations());
-
       return;
     }
     console.log(data);
     ev.target.appendChild(document.getElementById(data));
-    console.log(getPieceLocations());
-
   }
