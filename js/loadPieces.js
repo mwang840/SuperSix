@@ -27,11 +27,11 @@ function populate_grid(){
 }
 
 function addPieceToGrid(className, color, piece, id){
-    document.getElementsByClassName("grid")[0].innerHTML += `<div class="is-piece ` + className + `" id="` + id + `"><img width="70px" height="70px" src="images/pixel-pieces/` + color + `-` + piece + `.png">`; //there's only one grid
+    document.getElementsByClassName("grid")[0].innerHTML += `<div class="is-piece ` + className + `" id="` + id + `"><img width="70px" height="70px" src="images/AIGenerated-pieces/` + color + `-` + piece + `.png">`; //there's only one grid
 }
 
 function addBlankSpaceToGrid(className, id){
-    document.getElementsByClassName("grid")[0].innerHTML += `<div class="not-piece ` + className + `" id="` + id + `"><img width="70px" height="70px" src="images/pixel-pieces/blank.png">`;
+    document.getElementsByClassName("grid")[0].innerHTML += `<div class="not-piece ` + className + `" id="` + id + `"><img width="70px" height="70px" src="images/blank.png">`;
 }
 
 function addPawns(color){
