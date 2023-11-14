@@ -21,12 +21,20 @@ function allowDrop(ev) {
 
       console.log("###################################");
       var sittingItem = ev.target;
+      console.log("***");
+      console.log(ev.target)
+      console.log("***");
+
       var sittingItemId = ev.target.id;
       //console.log("sitting item ");
       //console.log(sittingItem);
       //console.log("parent div");
       let parentDiv = sittingItem.parentNode;
       console.log(parentDiv);
+      if (parentDiv.getAttribute("class") === "grid"){
+        console.log("Skipping Drop onto undroppable area");
+        return;
+      }
       document.getElementById(sittingItemId).remove();
       console.log("###################################");
       console.log(sittingItemId.indexOf(".png"));
@@ -36,10 +44,15 @@ function allowDrop(ev) {
             current_piece = ev.target.removeChild(item);
             parentDiv.appendChild(current_piece);
       }
+
       //console.log(current_piece);
       //ev.target.parent.appendChild(document.getElementById(data));
+      console.log(getPieceLocations());
+
       return;
     }
     console.log(data);
     ev.target.appendChild(document.getElementById(data));
+    console.log(getPieceLocations());
+
   }
