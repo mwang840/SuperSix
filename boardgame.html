@@ -5,10 +5,11 @@
          <title>Super Six</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-        <script type="text/javascript" charset="utf-8" src="js/toggleInstuctions.js"></script>
-        <script type="text/javascript" charset="utf-8" src="js/site.js"></script>
-        <script type="text/javascript" charset="utf-8" src="js/loadPieces.js"></script>
-        <script type="text/javascript" charset="utf-8" src="js/movePiece.js"></script>
+        <script type="text/javascript" charset="utf-8" defer src="js/toggleInstuctions.js"></script>
+        <script type="text/javascript" charset="utf-8" defer src="js/site.js"></script>
+        <script type="text/javascript" charset="utf-8" defer src="js/loadPieces.js"></script>
+        <script type="text/javascript" charset="utf-8" defer src="js/movePiece.js"></script>
+        <script type="text/javascript" charset="utf-8" defer src="js/dragAndDrop.js"></script>
         <link id="pagestyle" rel="stylesheet" type="text/css" href="css/AIGenerated.css">
         <!--<link href="css/board.css">-->
     </head>
@@ -24,10 +25,13 @@
         <button class="accordion">Instructions</button>
         <div class="panel">
             <p>Welcome to Super Six Chess</p>
-            <p>Two colors face off, yellow and blue, home of the University of Delaware's mascots</p>
+            <p>Two teams face each other to the death, and it is your job to lead your team to glory!</p>
             <p>You're objective is to put the king of your opponents in inescapable danger</p>
+            <img src="images/instructions.jpg" alt="Instructions Picture">
+            <p>Checkmate: If player 1 has cornered player 2's king and player 2 can't move their king out of danger, player 1 wins</p>
+            <p>Stalemate: A stalemate happens when a player's king has no legal move to make, the game ends as a draw</p>
         </div>
-        <div class="grid">
+        <div class="grid" ondrop="drop(event)" ondragover="allowDrop(event)">
 
         </div>
     </body>

@@ -36,10 +36,12 @@ ul.styleBar {
   }
   /*Found this code on how to make an n by n grid from this link. https://stackoverflow.com/questions/58572896/create-a-css-grid-with-nn-squares */
 .grid {
+  margin-left: 25%;
   display: grid;
-  grid-template-columns: repeat(8, 12vmax);
-  grid-template-rows: repeat(8, 12vmax);
-  height: 100vh;
+  grid-template-columns: repeat(8, 6vmax);
+  grid-template-rows: repeat(8, 5vmax);
+  height: 80px;
+  width: 80px;
   padding: 10px;
   background-color: transparent;
 }

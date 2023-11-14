@@ -131,3 +131,5 @@ dist
 
 #teammate has a mac so adding this here
 .DS_Store
+
+config.env
