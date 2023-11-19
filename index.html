@@ -3,6 +3,7 @@
   <meta charset="UTF-8">
   <title>SuperSix</title>
   <script type="text/javascript" charset="utf-8" src="js/site.js"></script>
+  <link href="css/signup.css"></link>
   <link id="pagestyle" rel="stylesheet" type="text/css" href="css/AIGenerated.css">
 </head>
 <body>
@@ -18,27 +19,33 @@
         <button>Sign out</button>
     </div>
   <div>
-      <form id='nameform' >
-          <div class='form-group'>
-              <label for='user'>Email Address:</label>
-              <input id='user' type='text' class='form-control' >
-          </div>
-          <div class='form-group'>
-            <label for='password'>Password:</label>
-            <input id='password' type='text' class='form-control' >
-          </div>
-        </form>  
-        <label>New here?</label><button onclick="goToSignUp()">Sign up</button><input type='submit' id='go' value='Sign in' onclick="window.location.replace = 'https://mwang840.github.io/SuperSix/boardgame.html'; "> 
-        <button onclick="loadGame()">Play as guest</button>    
+    <form id='nameform' action="/sign-up" method="post">
+      <div class='form-group'>
+          <label for='user'>Email Address:</label>
+          <input id='user' name='emailAddress' type='text' class='form-control' required>
+      </div>
+      <div class='form-group'>
+        <label for='password'>Password:</label>
+        <input id='password' name='password' type='text' class='form-control' required>
+      </div>
+      <div class='form-group'>
+        <label for='id'>Id:</label>
+        <input id='id' name='id' type='text' class='form-control' required>
+      </div>
+      <!-- <button onclick="window.location.replace='https://mwang840.github.io/SuperSix/boardgame.html.'">Create Account</button> -->
+      <input type="submit" class="form-control" value="Create Account">      
+    </form> 
   </div>
 </body>
 <script>
-  function goToSignUp(){
-    window.open('sign-up', '_current');
-  }
+  // function goToSignUp(){
+  //   console.log("Sign-up button clicked");
+  //   window.open('sign-up?login=true', '_current');
+  // }
 
   function loadGame(){
     window.open('boardgame.html', '_current');
   }
   </script>
+  <script src="authenticate.js"></script>
 </html>
