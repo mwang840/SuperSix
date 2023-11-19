@@ -20,19 +20,23 @@
         <button>Sign out</button>
     </div>
     <div>
-        <form id='nameform' action="../boardgame.html">
+        <form id='nameform' action="/sign-up" method="post">
             <div class='form-group'>
                 <label for='user'>Email Address:</label>
-                <input id='user' type='text' class='form-control' required>
+                <input id='user' name='emailAddress' type='text' class='form-control' required>
             </div>
             <div class='form-group'>
               <label for='password'>Password:</label>
-              <input id='password' type='text' class='form-control' required>
+              <input id='password' name='password' type='text' class='form-control' required>
+            </div>
+            <div class='form-group'>
+              <label for='id'>Id:</label>
+              <input id='id' name='id' type='text' class='form-control' required>
             </div>
             <!-- <button onclick="window.location.replace='https://mwang840.github.io/SuperSix/boardgame.html.'">Create Account</button> -->
             <input type="submit" class="form-control" value="Create Account">      
           </form>      
     </div>
-    <script src="authenticate.js"></script>
+    <!-- <script src="authenticate.js"></script> -->
 </body>
 </html>
