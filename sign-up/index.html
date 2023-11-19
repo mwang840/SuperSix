@@ -34,9 +34,14 @@
               <input id='id' name='id' type='text' class='form-control' required>
             </div>
             <!-- <button onclick="window.location.replace='https://mwang840.github.io/SuperSix/boardgame.html.'">Create Account</button> -->
-            <input type="submit" class="form-control" value="Create Account">      
+            <input type="submit" class="form-control" value="Create Account" onclick="loadGame()">      
           </form>      
     </div>
-    <!-- <script src="authenticate.js"></script> -->
+    <script>
+      function loadGame(){
+        console.log("Game is about to be loaded!");
+        window.location.href = "./boardgame.html"
+      }
+    </script>
 </body>
 </html>

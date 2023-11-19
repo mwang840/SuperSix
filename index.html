@@ -33,16 +33,17 @@
         <label for='id'>Id:</label>
         <input id='id' name='id' type='text' class='form-control' required>
       </div>
-      <!-- <button onclick="window.location.replace='https://mwang840.github.io/SuperSix/boardgame.html.'">Create Account</button> -->
       <input type="submit" class="form-control" value="Create Account">      
     </form> 
+    <label>New here?</label><button onclick="goToSignUp()">Sign up</button><input type='submit' id='go' value='Sign in' onclick="window.location.replace = 'https://mwang840.github.io/SuperSix/boardgame.html'; "> 
+    <button onclick="loadGame()">Play as guest</button>    
   </div>
 </body>
 <script>
-  // function goToSignUp(){
-  //   console.log("Sign-up button clicked");
-  //   window.open('sign-up?login=true', '_current');
-  // }
+  function goToSignUp(){
+    console.log("Sign-up button clicked");
+    window.open('sign-up/index.html', '_current');
+  }
 
   function loadGame(){
     window.open('boardgame.html', '_current');
