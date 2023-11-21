@@ -93,6 +93,8 @@ app.post("/sign-up",  (req, res) => {
       //Creates the new user object
       //Inserts one collection into the database
       connection.collection("User").insertOne({emailAddress, password, id});
+      //This code works, sends the file back to boardgame html page!
+      res.sendFile("boardgame.html", { root: "./"})
     }
   })
 });
