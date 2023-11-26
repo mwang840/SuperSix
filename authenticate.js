@@ -26,9 +26,21 @@ console.log("At last the database is connected");
 
 //Creating the user schema
 const userSchema = new mongoose.Schema({
-  emailAddress: String,
-  password: String,
-  id:Number
+  emailAddress: {
+    type:String,
+    required: true,
+    unique: true
+  },
+  password:{
+    type:String,
+    required: true,
+    unique: true
+  }, 
+  id:{
+  type:Number,
+  required: true,
+  unique: true
+  },
 });
 
 //Forgot to include the salt methods, important for cyber reasons
@@ -68,19 +80,21 @@ app.get("/boardgame.html", (req, res) => {
 
 //Apparentally post methods dont work on res.sendFile (insert picardface palm emoji error)
 app.get("/sign-up", (req, res)=>{
-  res.sendFile(path.join(__dirname + "/index.html"));
-})
+  res.sendFile(path.join(__dirname + "/register.html"));
+});
 //Post method for registering a user to the database
 app.post("/sign-up",  (req, res) => {
   //Sends the file indexhtml under the sign up directory
   
-  const { emailAddress, password } = req.body;
+  const { emailAddress, password, id } = req.body;
   User.findOne({emailAddress: emailAddress}).exec().then(async user=>{
     if(user){
-      res.send({message:"Looks like this user with the email " + emailAddress + " is already in our database!"});
+      console.log("Error, that email is already taken!");
+      res.status(400).json({ errors: [{ msg: "User already exists in our database!" }] });
     }
     else{
       //Matches the user via id and sees if it can find the id, if not found then register to db
+      console.log("Going to register user!");
       let id = 0;
       let matchingId = false;
       do{
@@ -99,15 +113,28 @@ app.post("/sign-up",  (req, res) => {
   })
 });
 
-//Logs in a user to the website
-// app.post("/", (req, res)=>{
-//   const {email, password} = req.body();
-//   User.findOne({emailAddress:email}).exec().then((user)=>{
-//     if(user){
+app.get("/login", (req, res)=>{
+  res.sendFile(path.join(__dirname + "/login.html"));
+});
 
-//     }
-//   })
-// });
+// Logs in a user to the website
+app.post("/login", (req, res)=>{
+  const {emailAddress, password, id} = req.body;
+  User.findOne({emailAddress:email}).exec().then((user)=>{
+    if(user){
+      if(password === user.password && id === user.id){
+        res.send({user: user, message: " can login to the game"})
+        res.sendFile("boardgame.html", {root: "./"})
+      }
+      else{
+        res.send({user: user, message: " can not login to the game due to an incorrect password"})
+      }
+    }
+    else{
+      res.status(400).json({ errors: [{ msg: "User does not exist exists in our database!" }] });
+    }
+  })
+});
 
 //Tells the server express is being used
 app.use("/", express.static(path.join(__dirname, "")));

@@ -35,16 +35,19 @@
       </div>
       <input type="submit" class="form-control" value="Create Account">      
     </form> 
-    <label>New here?</label><button onclick="goToSignUp()">Sign up</button><input type='submit' id='go' value='Sign in' onclick="window.location.replace = 'https://mwang840.github.io/SuperSix/boardgame.html'; "> 
+    <label>New here?</label><button onclick="goToSignUp()">Sign up</button><input type='submit' id='go' value='Sign in' onclick="goToSignIn()"> 
     <button onclick="loadGame()">Play as guest</button>    
   </div>
 </body>
 <script>
   function goToSignUp(){
     console.log("Sign-up button clicked");
-    window.open('sign-up/index.html', '_current');
+    window.open('sign-up/register.html', '_current');
   }
-
+  function goToSignIn(){
+    console.log("Sign-in button clicked");
+    window.open('login/login.html', '_current');
+  }
   function loadGame(){
     window.open('boardgame.html', '_current');
   }

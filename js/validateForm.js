@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function(){
             console.log("Cant leave any of those fields empty, try again!");
             window.alert("Error invalid email");
         }
-        else{
+        else if(emailRegex.test(email) && passwordRegex.test(password) && content.email === null && content.password === null && content.id === null){
             loadGame();
         }
     })
