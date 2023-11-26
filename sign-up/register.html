@@ -1,0 +1,52 @@
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>SuperSix</title>
+  <link rel="stylesheet" href="../css/signup.css">
+  <script type="text/javascript" charset="utf-8" src="../js/site.js"></script>
+  <link id="pagestyle" rel="stylesheet" type="text/css" href="../css/AIGenerated.css">
+</head>
+<body>
+  <ul class="styleBar">
+    <li class="blank">Select a Theme:</li>
+    <li id="stylechange" onclick="changeSheet(0)">AIGenerated</li>
+    <li id="stylechange" onclick="changeSheet(1)">Pixel</li>
+    <li id="stylechange" onclick="changeSheet(2)">Professors</li>
+    <li id="stylechange" onclick="changeSheet(3)">Text</li>
+  </ul>
+    <h1 id="system-message">Super Six Chess</h1>
+
+    <div class="logged-in-user" hidden>
+        <div>Welcome, </div>
+        <button>Sign out</button>
+    </div>
+    <div>
+        <form id='nameform' action="/sign-up" method="post" onsubmit="loadGame()">
+            <div class='form-group'>
+                <label for='user'>
+                  Email Address:
+                  <input id='user' name='emailAddress' type='text' class='form-control' placeholder="username@example.com" autocomplete="off" required>
+                </label>
+                
+            </div>
+            <div class='form-group'>
+              <label for='password'>Password:</label>
+              <input id='password' name='password' type='text' class='form-control'placeholder="8 characters min length." autocomplete="off" required>
+            </div>
+            <div class='form-group'>
+              <label for='id'>Id:</label>
+              <input id='id' name='id' type='text' class='form-control' placeholder="(1-9999)" autocomplete="off" required>
+            </div>
+            <!-- <button onclick="window.location.replace='https://mwang840.github.io/SuperSix/boardgame.html.'">Create Account</button> -->
+            <input type="submit" class="form-control" value="Create Account">      
+          </form>      
+    </div>
+    <script src="../js/validateForm.js"></script>
+    <!-- <script>
+      function loadGame(){
+        console.log("Game is about to be loaded!");
+        window.location.href = "./boardgame.html"
+      }
+    </script> -->
+</body>
+</html>
