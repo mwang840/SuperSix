@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <title>SuperSix</title>
   <script type="text/javascript" charset="utf-8" src="js/site.js"></script>
-  <link href="css/signup.css"></link>
+  <link rel="stylesheet" href="css/index.css"></link>
   <link id="pagestyle" rel="stylesheet" type="text/css" href="css/AIGenerated.css">
 </head>
 <body>
@@ -15,30 +15,23 @@
     <li id="stylechange" onclick="changeSheet(2)">Professors</li>
     <li id="stylechange" onclick="changeSheet(3)">Text</li>
   </ul>
-    <!-- <div class="logged-in-user" hidden>
-        <div>Welcome, </div>
-        <button>Sign out</button>
-    </div>
-  <div>
-    <form id='nameform' action="/sign-up" method="post">
-      <div class='form-group'>
-          <label for='user'>Email Address:</label>
-          <input id='user' name='emailAddress' type='text' class='form-control' required>
-      </div>
-      <div class='form-group'>
-        <label for='password'>Password:</label>
-        <input id='password' name='password' type='text' class='form-control' required>
-      </div>
-      <div class='form-group'>
-        <label for='id'>Id:</label>
-        <input id='id' name='id' type='text' class='form-control' required>
-      </div>
-      <input type="submit" class="form-control" value="Create Account">      
-    </form>  -->
-    <label>New here?</label><button onclick="goToSignUp()">Sign up</button><input type='submit' id='go' value='Sign in' onclick="goToSignIn()"> 
-    <button onclick="loadGame()">Play as guest</button>    
+    <h1>Super Six</h1>
+    <button class="accordion">About</button>
+    <div class="panel">
+      <p>Welcome to Super Six Chess</p>
+      <p>Two teams face each other to the death, and it is your job to lead your team to glory!</p>
+      <p>You're objective is to put the king of your opponents in inescapable danger</p>
+      <img src="images/instructions.jpg" alt="Instructions Picture">
+      <p>Checkmate: If player 1 has cornered player 2's king and player 2 can't move their king out of danger, player 1 wins</p>
+      <p>Stalemate: A stalemate happens when a player's king has no legal move to make, the game ends as a draw</p>
+  </div>
+    <label>New here?</label>
+    <button onclick="goToSignUp()" class="sign-up">Sign up</button>
+    <input type='submit' id='go' value='Sign in' onclick="goToSignIn()"> 
+    <button onclick="loadGame()" class="playGame">Play as guest</button>    
   </div>
 </body>
+<script src="js/toggleInstuctions.js"></script>
 <script>
   function goToSignUp(){
     console.log("Sign-up button clicked");
@@ -52,5 +45,5 @@
     window.open('boardgame.html', '_current');
   }
   </script>
-  <script src="authenticate.js"></script>
+  <!-- <script src="authenticate.js"></script> -->
 </html>
