@@ -85,8 +85,10 @@ app.get("/sign-up", (req, res)=>{
 //Post method for registering a user to the database
 app.post("/sign-up",  (req, res) => {
   //Sends the file indexhtml under the sign up directory
-  
   const { emailAddress, password, id } = req.body;
+  console.log("Email ", emailAddress);
+  console.log("Password ", password);
+  console.log("Id ", id);
   User.findOne({emailAddress: emailAddress}).exec().then(async user=>{
     if(user){
       console.log("Error, that email is already taken!");
