@@ -1,6 +1,6 @@
 body {
-    background-color: #464141;
-    color: white;
+  background: linear-gradient(to right, #0243a5, #66a6e6);
+  color: white;
 }
 ul.styleBar {
     top: 0;
@@ -58,11 +58,11 @@ ul.styleBar {
   }
 
 .you {
-  background-color: red;
+  background-color: yellow;
 }
 
 .dee{
-  background-color: black;
+  background-color: blue;
 }
 
 h1{
@@ -71,8 +71,8 @@ h1{
 }
 
 .accordion {
-  background-color: #eee;
-  color: #444;
+  background: linear-gradient(to right, #0243a5, #66a6e6);
+  color: #ffffff;
   cursor: pointer;
   padding: 18px;
   width: 100%;
@@ -84,7 +84,7 @@ h1{
 }
 
 .active, .accordion:hover {
-  background-color: #ccc; 
+  background-color: rgb(247, 184, 65);  
 }
 
 .panel {
