@@ -36,11 +36,6 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true
   }, 
-  id:{
-  type:Number,
-  required: true,
-  unique: true
-  },
 });
 
 //Forgot to include the salt methods, important for cyber reasons
@@ -85,27 +80,26 @@ app.get("/sign-up", (req, res)=>{
 //Post method for registering a user to the database
 app.post("/sign-up",  (req, res) => {
   //Sends the file indexhtml under the sign up directory
-  const { emailAddress, password, id } = req.body;
+  const { emailAddress, password} = req.body;
   console.log("Email ", emailAddress);
   console.log("Password ", password);
-  console.log("Id ", id);
   User.findOne({emailAddress: emailAddress}).exec().then(async user=>{
     if(user){
       console.log("Error, that email is already taken!");
       res.status(400).json({ errors: [{ msg: "User already exists in our database!" }] });
     }
     else{
-      //Matches the user via id and sees if it can find the id, if not found then register to db
-      console.log("Going to register user!");
-      let id = 0;
-      let matchingId = false;
-      do{
-        id++;
-        await User.findOne({ id: id }).exec().then(user => {
-        if (!user) matchingId = true;
-        })
-      }
-      while(!matchingId);
+      // //Matches the user via id and sees if it can find the id, if not found then register to db
+      // console.log("Going to register user!");
+      // let id = 0;
+      // let matchingId = false;
+      // do{
+      //   id++;
+      //   await User.findOne({ id: id }).exec().then(user => {
+      //   if (!user) matchingId = true;
+      //   })
+      // }
+      // while(!matchingId);
       //Creates the new user object
       //Inserts one collection into the database
       connection.collection("User").insertOne({emailAddress, password, id});
