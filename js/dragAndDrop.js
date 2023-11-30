@@ -13,22 +13,11 @@ function allowDrop(ev) {
   
   function drop(ev) {
     ev.preventDefault();
-    //console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%");
     var data = ev.dataTransfer.getData("text");
     var piece = document.getElementById(data);
-    //console.log(piece);
-    //console.log("$$$$$$$$$$$$$$$$$$$$$$$$");
-    //console.log(piece.parentNode);
+
     var item =  ev.target.firstElementChild; // element being dropped onto. If there is no piece, it is a div, if there is a piece there, it's ap piece
 
-    /*console.log("DEEEEEEEEEEEEZ");
-    console.log(item);
-
-    if (ev.target === piece.parentNode){
-      console.log("Dropped into the same place, skipping");
-      return;
-    }
-    console.log("DEEEEEEEEEEEEZ");*/
 
     if (item){
       var sittingItem = ev.target;
@@ -48,11 +37,8 @@ function allowDrop(ev) {
             console.log("************************************************")
             current_piece = ev.target.removeChild(item);
             newParentDiv.appendChild(current_piece); // the div we are dropping onto
-            
             upDateParentIsNotPiece(newParentDiv);
       }
-      //console.log(current_piece);
-      //ev.target.parent.appendChild(document.getElementById(data));
       return;
     }
     //console.log("************");
