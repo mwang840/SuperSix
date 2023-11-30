@@ -1,10 +1,9 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  background: linear-gradient(to right, #0243a5, #66a6e6);
   margin: 0;
   padding: 0;
 }
-
 header {
   color: #fff;
   padding: 20px;
@@ -117,8 +116,8 @@ h1{
 }
 
 .accordion {
-  background-color: #eee;
-  color: #444;
+  background-color: #66a6e6;
+  color: #000000;
   cursor: pointer;
   padding: 18px;
   width: 100%;
@@ -130,7 +129,7 @@ h1{
 }
 
 .active, .accordion:hover {
-  background-color: #ccc; 
+  background-color: rgb(247, 184, 65); 
 }
 
 .panel {
