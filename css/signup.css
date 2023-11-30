@@ -8,6 +8,15 @@ input[type=text]{
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
+    width: 300px;
+}
+
+input[type=password]{
+    padding: 10px 12px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    width: 300px;
 }
 
 label {
