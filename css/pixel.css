@@ -15,6 +15,7 @@
 body {
     font-family: "myFirstFont"; 
     font-size: 10px;
+    background: linear-gradient(to right, #464141, rgb(156, 91, 91));
     background-color: #464141;
     color: white;
 }
