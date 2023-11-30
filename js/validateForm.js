@@ -6,12 +6,10 @@ document.addEventListener("DOMContentLoaded", function(){
         e.preventDefault();
         let email = document.querySelector("#user").value;
         let password = document.querySelector("#password").value;
-        let id = document.querySelector("#id").value;
         //^^Grabs the form elements
         const content = {
             email: email,
             password: password,
-            id: id
         }
         //Regex for valid emails
         const emailRegex = /^[A-Za-z0-9._]+@{1}[A-Za-z0-9]+.{1}(com|net|dev|org|edu|gov){1}$/;
@@ -32,13 +30,13 @@ document.addEventListener("DOMContentLoaded", function(){
             window.stop()
             e.preventDefault();
         }
-        else if((content.email === null || content.password === null || content.id === null)){
+        else if((content.email === null || content.password === null)){
             console.log("Cant leave any of those fields empty, try again!");
             window.alert("Error invalid email");
             window.stop();
             e.preventDefault();
         }
-        else if(emailRegex.test(email) && passwordRegex.test(password) && content.email === null && content.password === null && content.id === null){
+        else if(emailRegex.test(email) && passwordRegex.test(password) && content.email === null && content.password === null){
             
             loadGame();
         }
