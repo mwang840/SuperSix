@@ -71,7 +71,7 @@ h1{
 
 .accordion {
   background: linear-gradient(to right, rgb(154, 95, 52), rgb(212, 164, 128));
-  color: black;
+  color: white;
   cursor: pointer;
   padding: 18px;
   width: 100%;
