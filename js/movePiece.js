@@ -12,11 +12,14 @@ function movePiece() {
             const uniqueIDSelector = "#" + uniqueID;
             if (counter == 1) {
                 console.log(uniqueID);
-                if (document.querySelector(uniqueIDSelector).classList.contains("is-piece")) {
-                    lastPieceClicked = uniqueID; //track the ID
-                    lastImageSRC = document.querySelector('#' + uniqueID).querySelector('img').getAttribute('src'); // also track the image src for convenience
-                    counter = 2;
+                if (!!document.querySelector(uniqueIDSelector)){ //Add a check to make sure it's not NULL (and this only happens if you accidently drop on the same place)
+                    if (document.querySelector(uniqueIDSelector).classList.contains("is-piece")) {
+                        lastPieceClicked = uniqueID; //track the ID
+                        lastImageSRC = document.querySelector('#' + uniqueID).querySelector('img').getAttribute('src'); // also track the image src for convenience
+                        counter = 2;
+                    }
                 }
+
             } else if (counter == 2) {
                 const lastPieceClickedSelector = "#" + lastPieceClicked;
                 console.log(uniqueID + div.className + lastImageSRC + counter);
