@@ -9,6 +9,7 @@
   object-fit: cover;
   width: 100%;
   height: 100%;
+  max-width: 100%;
 }
   
 body {
@@ -50,21 +51,27 @@ ul.styleBar {
     background-color: #333;
   }
   /*Found this code on how to make an n by n grid from this link. https://stackoverflow.com/questions/58572896/create-a-css-grid-with-nn-squares */
-.grid {
-    margin-left: 25%;
+  .grid {
+    margin-left: 32%;
     display: grid;
+    /*
     grid-template-columns: repeat(8, 6vmax);
     grid-template-rows: repeat(8, 5vmax);
-    height: 80px;
-    width: 80px;
+    */
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    height: 500px;
+    width: 500px;
     padding: 10px;
     background-color: transparent;
-}
-
-.grid > .you, .grid > .dee {
-    border: 3px yellow solid;
-    box-sizing: border-box;
-}
+  }
+  
+  .grid > .you, .grid > .dee {
+      border: 3px black solid;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 1 / 1;
+  }
 
 .you {
   background-color: red;
