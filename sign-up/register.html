@@ -21,7 +21,7 @@
         <button>Sign out</button>
     </div>
     <div>
-        <form id='nameform' action="/sign-up" method="post" onsubmit="loadGame()">
+        <form id='nameform' action="/sign-up" method="post">
             <div class='form-group'>
                 <label for='user'>
                   Email Address:
@@ -42,11 +42,6 @@
           </form>      
     </div>
     <script src="../js/validateForm.js"></script>
-    <!-- <script>
-      function loadGame(){
-        console.log("Game is about to be loaded!");
-        window.location.href = "./boardgame.html"
-      }
-    </script> -->
+    <script src="../authenticate.js"></script>
 </body>
 </html>
