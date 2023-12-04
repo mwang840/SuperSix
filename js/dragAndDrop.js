@@ -72,7 +72,7 @@ function allowDrop(ev) {
 
   function addPieceToTakenSide(piece){
     let takenColor = getPieceColor(piece.id); //Dictates side
-    piece.setAttribute(draggable, false) //Don't want to allow dragging while it's in the side
+    piece.setAttribute("draggable", false) //Don't want to allow dragging while it's in the side
     if (takenColor === "black"){
         document.getElementsByClassName("boardleft")[0].appendChild(piece);
     }
