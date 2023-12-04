@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function(){
         //Regex for passwords which contains at least a special character and are at LEAST 8 characters long
         const passwordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/;
         //Condition if the email isn't valid! Exhaustive conditional checks
-        if(emailRegex.test(email) === false){
+        if(!emailRegex.test(email)){
             console.log("Invalid Email");
             window.alert("Error invalid email");
             window.stop();
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function(){
             e.preventDefault();
             // return false;
         }
-        else if(passwordRegex.test(password)===false){
+        else if(!passwordRegex.test(password)){
             console.log("Invalid Password");
             window.alert("Error invalid password, it must contains at least 1 special character, a digit, an uppercase character, and are at LEAST 8 characters long");
             window.stop()

@@ -90,18 +90,10 @@ app.post("/sign-up",  (req, res) => {
     }
     else{
       // //Matches the user via id and sees if it can find the id, if not found then register to db
-      // console.log("Going to register user!");
-      // let id = 0;
-      // let matchingId = false;
-      // do{
-      //   id++;
-      //   await User.findOne({ id: id }).exec().then(user => {
-      //   if (!user) matchingId = true;
-      //   })
-      // }
-      // while(!matchingId);
+      console.log("Going to register user!");
       //Creates the new user object
       //Inserts one collection into the database
+      
       connection.collection("User").insertOne({emailAddress, password, id});
       //This code works, sends the file back to boardgame html page!
       res.sendFile("boardgame.html", { root: "./"})
