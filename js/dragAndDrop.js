@@ -21,7 +21,8 @@ function allowDrop(ev) {
 
     if (item){
       var sittingItem = ev.target;
-      console.log(ev.target)
+      //console.log("Tom and jerry")
+      //console.log(ev.target)
       var sittingItemId = ev.target.id;
       let newParentDiv = sittingItem.parentNode;
       if (newParentDiv.getAttribute("class") === "grid"){
@@ -34,7 +35,9 @@ function allowDrop(ev) {
 
       if (sittingItemId.indexOf(".png") > -1){
             console.log("Piece was likely dropped onto another piece");
-            console.log("************************************************")
+            //console.log(ev.target);
+            addPieceToTakenSide(sittingItem);
+            //console.log("************************************************")
             current_piece = ev.target.removeChild(item);
             newParentDiv.appendChild(current_piece); // the div we are dropping onto
             upDateParentIsNotPiece(newParentDiv);
@@ -43,10 +46,10 @@ function allowDrop(ev) {
     }
     //console.log("************");
     //console.log(data);
-    console.log("Event target ");
+    //console.log("Event target ");
     upDateParentIsNotPiece(ev.target);
     //console.log(ev.target);
-    console.log(ev.target.className);
+    //console.log(ev.target.className);
     try {
       ev.target.appendChild(piece);
     } catch (error) {
@@ -72,4 +75,20 @@ function allowDrop(ev) {
       }
       parentNode.className = newClass;
     }
+  }
+
+  function addPieceToTakenSide(piece){
+    let takenColor = getPieceColor(piece.id); //Dictates side
+    if (takenColor === "black"){
+        console.log(piece);
+        document.getElementsByClassName("boardleft")[0].appendChild(piece);
+    }
+    else{
+      console.log(piece);
+      document.getElementsByClassName("boardright")[0].appendChild(piece);
+    }
+  }
+
+  function getPieceColor(id){
+    return id.split("-")[0].substring(3);
   }
