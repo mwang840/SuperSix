@@ -23,7 +23,6 @@ function populate_grid(){
     }
     addPawns("white");
     addChessPieces("white");
-    movePiece();
 }
 
 function addPieceToGrid(className, color, piece, id){

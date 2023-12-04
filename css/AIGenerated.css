@@ -90,46 +90,48 @@ ul.styleBar {
     width: 80px;
     padding: 10px;
     background-color: transparent;
-  }
+}
   
-  .grid > .you, .grid > .dee {
-      border: 3px black solid;
-  }
+.grid > .you, .grid > .dee {
+    border: 3px black solid;
+}
   
-  .you {
-    background-color: yellow;
-  }
+.you {
+  background-color: yellow;
+}
   
-  .dee{
-    background-color: blue;
-  }
+.dee{
+  background-color: blue;
+}
   
-  h1{
-    text-align: center;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  }
+h1{
+  text-align: center;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
   
-  .accordion {
-    background-color: #eee;
-    color: #444;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 15px;
-    transition: 0.4s;
-  }
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
   
-  .active, .accordion:hover {
-    background-color: #ccc; 
-  }
+.active, .accordion:hover {
+  background-color: #ccc; 
+}
   
-  .panel {
-    padding: 0 18px;
-    display: none;
-    background-color: white;
-    overflow: hidden;
-  }
-  
+.panel {
+  padding: 0 18px;
+  display: none;
+  background-color: white;
+  overflow: hidden;
+}
+.movable {
+  background-color: purple;
+}
