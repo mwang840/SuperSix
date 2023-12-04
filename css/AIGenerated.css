@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(to right, #0243a5, #66a6e6);
+  background: linear-gradient(to right, rgb(184, 184, 48), rgb(247, 137, 247));
   margin: 0;
   padding: 0;
 }
@@ -103,11 +103,11 @@ ul.styleBar {
 }
 
 .you {
-  background-color: yellow;
+  background-color: rgb(31, 30, 30);
 }
 
 .dee{
-  background-color: blue;
+  background-color: white;
 }
 
 h1{
@@ -116,7 +116,7 @@ h1{
 }
 
 .accordion {
-  background-color: #66a6e6;
+  background: linear-gradient(to right, rgb(184, 184, 48), rgb(247, 137, 247));
   color: #000000;
   cursor: pointer;
   padding: 18px;
@@ -129,7 +129,7 @@ h1{
 }
 
 .active, .accordion:hover {
-  background-color: rgb(247, 184, 65); 
+  background-color: gold
 }
 
 .panel {
