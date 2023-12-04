@@ -4,7 +4,6 @@ const cors = require("cors");
 const path = require("path");
 const bcrypt = require("bcrypt");
 const morgan = require("morgan");
-const bodyParser = require("body-parser");
 require("dotenv").config({ path: "./config.env" });
 
 const app = express();

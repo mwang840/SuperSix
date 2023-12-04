@@ -4,8 +4,8 @@ let responseForm = document.getElementById("nameform");
 document.addEventListener("DOMContentLoaded", function(){
     document.querySelector("form").addEventListener("submit", function(e){
         e.preventDefault();
-        let email = document.querySelector("#user").value;
-        let password = document.querySelector("#password").value;
+        let email = document.getElementById("user").value;
+        let password = document.getElementById("password").value;
         //^^Grabs the form elements
         const content = {
             email: email,
@@ -36,8 +36,8 @@ document.addEventListener("DOMContentLoaded", function(){
             window.stop();
             e.preventDefault();
         }
-        else if(emailRegex.test(email) && passwordRegex.test(password) && content.email === null && content.password === null){
-            
+        else{
+            console.log("Game will be load");
             loadGame();
         }
     })
