@@ -80,3 +80,4 @@ function addChessPieces(color){
 function getPieceLocations(){
     return document.getElementsByClassName("grid")[0].children;
 }
+
