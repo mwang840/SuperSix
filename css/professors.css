@@ -1,5 +1,5 @@
 body {
-  background: linear-gradient(to right, #0243a5, #66a6e6);
+  background: linear-gradient(to right, #0243a5, #dde671);
   color: white;
 }
 ul.styleBar {
@@ -71,7 +71,7 @@ h1{
 }
 
 .accordion {
-  background: linear-gradient(to right, #0243a5, #66a6e6);
+  background: linear-gradient(to right, #0243a5, #dde671);
   color: #ffffff;
   cursor: pointer;
   padding: 18px;
