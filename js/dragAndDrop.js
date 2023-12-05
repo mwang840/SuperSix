@@ -177,7 +177,6 @@ function allowDrop(ev) {
     //highlight available moves
     movableSpaces.forEach(function (id) {
       var element = document.getElementById(id);
-      // Check if the element exists before adding the class
       if (element) {
         element.classList.add("movable");
       }
@@ -187,7 +186,7 @@ function allowDrop(ev) {
   function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    //console.log("data -> " + data);
+    console.log("data -> " + data);
     //console.log(ev)
     //console.log(ev.target);
     //console.log(ev.srcElement);
@@ -232,9 +231,11 @@ function allowDrop(ev) {
       return;
     }
     console.log(data);
-    ev.target.appendChild(document.getElementById(data));
-    //console.log(ev.target.id.slice(0,2) + "_" + data.slice(3,data.length - 4) + ".png");
-    document.getElementById(data).setAttribute("id",ev.target.id.slice(0,2) + "_" + data.slice(3,data.length - 4) + ".png");
+    console.log(ev.target);
+    if (ev.target.classList.contains("movable")) {
+      ev.target.appendChild(document.getElementById(data));
+      document.getElementById(data).setAttribute("id",ev.target.id.slice(0,2) + "_" + data.slice(3,data.length - 4) + ".png");
+    }
     //remove the movable class to return to original color
     var elementsArray = document.querySelectorAll(".movable");
     elementsArray.forEach(function (element) {
