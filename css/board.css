@@ -58,19 +58,3 @@ h1{
   background-color: white;
   overflow: hidden;
 }
-
-div .boardleft {
-  /*background: red;
-  float: left;
-  width:220px;
-  position: relative;
-  z-index:2;*/
-}
-
-div .boardright {
-  /*background:blue;
-  float: right;
-  width:220px;
-  position: relative;
-  z-index:2;*/
-}
