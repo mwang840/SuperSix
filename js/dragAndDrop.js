@@ -8,7 +8,7 @@ function allowDrop(ev) {
     //console.log("*************");
     //console.log(dragParentDiv.className);
     ev.dataTransfer.setData("text", ev.target.id);
-    upDateParentIsNotPiece(dragParentDiv);
+    updateParentIsNotPiece(dragParentDiv);
   }
   
   function drop(ev) {
@@ -28,20 +28,18 @@ function allowDrop(ev) {
         return;
       }
       document.getElementById(sittingItemId).remove();
-      //console.log("###################################");
-      //console.log(sittingItemId.indexOf(".png"));
 
       if (sittingItemId.indexOf(".png") > -1){
             console.log("Piece was likely dropped onto another piece");
             addPieceToTakenSide(sittingItem);
             current_piece = ev.target.removeChild(item);
             newParentDiv.appendChild(current_piece); // the div we are dropping onto
-            upDateParentIsNotPiece(newParentDiv);
+            //updateParentIsNotPiece(newParentDiv);
       }
       return;
     }
 
-    upDateParentIsNotPiece(ev.target);
+    updateParentIsNotPiece(ev.target);
 
     try {
       ev.target.appendChild(piece);
@@ -56,7 +54,7 @@ function allowDrop(ev) {
   }
 
 
-  function upDateParentIsNotPiece(parentNode){
+  function updateParentIsNotPiece(parentNode){
 
     if (!!parentNode){
       var parentClass = parentNode.className.split(" ");
