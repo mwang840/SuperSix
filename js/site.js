@@ -22,9 +22,11 @@ var changeSheet = function(style){
         var pieces = document.querySelectorAll(".is-piece");
         for (var i = 0; i < pieces.length; i++) {
             //get the piece SRC. and split off the specific piece."images/pixel-pieces/black-pawn.png"
-            var piece_type_src = pieces[i].querySelector("img").getAttribute('src');
-            var piece_type = piece_type_src.substring(piece_type_src.lastIndexOf('/'));
-            pieces[i].querySelector("img").setAttribute('SRC',"images/"+piece_styles[style]+piece_type);
+            if (!!pieces[i]){
+                var piece_type_src = pieces[i].querySelector("img").getAttribute('src');
+                var piece_type = piece_type_src.substring(piece_type_src.lastIndexOf('/'));
+                pieces[i].querySelector("img").setAttribute('SRC',"images/"+piece_styles[style]+piece_type);                
+            }
         }
     }
 }
