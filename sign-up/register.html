@@ -2,6 +2,7 @@
 <head>
   <meta charset="UTF-8">
   <title>SuperSix</title>
+  <link rel="stylesheet" href="../css/signup.css">
   <script type="text/javascript" charset="utf-8" src="../js/site.js"></script>
   <link id="pagestyle" rel="stylesheet" type="text/css" href="../css/AIGenerated.css">
 </head>
@@ -20,19 +21,27 @@
         <button>Sign out</button>
     </div>
     <div>
-        <form id='nameform' action="../boardgame.html">
+        <form id='nameform' action="/sign-up" method="post">
             <div class='form-group'>
-                <label for='user'>Email Address:</label>
-                <input id='user' type='text' class='form-control' required>
+                <label for='user'>
+                  Email Address:
+                  <input id='user' name='emailAddress' type='text' class='form-control' placeholder="username@example.com" autocomplete="off" required>
+                </label>
+                
             </div>
             <div class='form-group'>
               <label for='password'>Password:</label>
-              <input id='password' type='text' class='form-control' required>
+              <input id='password' name='password' type='password' class='form-control'placeholder="8 characters min (special+digit&uppercase)" autocomplete="off" required>
             </div>
+            <!-- <div class='form-group'>
+              <label for='id'>Id:</label>
+              <input id='id' name='id' type='text' class='form-control' placeholder="(1-9999)" autocomplete="off" required>
+            </div> -->
             <!-- <button onclick="window.location.replace='https://mwang840.github.io/SuperSix/boardgame.html.'">Create Account</button> -->
             <input type="submit" class="form-control" value="Create Account">      
           </form>      
     </div>
-    <script src="authenticate.js"></script>
+    <script src="../js/validateForm.js"></script>
+    <script src="../authenticate.js"></script>
 </body>
 </html>

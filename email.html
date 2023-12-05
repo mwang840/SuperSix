@@ -8,6 +8,11 @@
       src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
     ></script>
     <script src="js/email.js"></script>
+    <script>
+      (function(){
+          emailjs.init("5BiCDNRS3pOWRkn3f");
+      })();
+      </script>
   </head>
   <body>
     <ul class="styleBar">
@@ -19,7 +24,6 @@
     </ul>
     <!-- A button to open the popup form -->
     <button class="open-button" onclick="openForm()">Open Form</button>
-
     <!-- The form -->
     <div class="form-popup" id="myForm">
       <form id="contact-form" class="form-container">
@@ -38,8 +42,12 @@
           id="user_lname"
           required
         />
-        <label for="email"><b>Email</b></label>
+        <label for="user_email"><b>Email</b></label>
         <input type="text" placeholder="Enter Email" name="user_email" required />
+        <label for="user_message">Message
+        <textarea id="user_message" name="user_message" rows="4" required></textarea>
+        </label>
+        <input type="text" placeholder="Enter Message" name="user_message" required />
         <button type="submit" class="btn">Send</button>
         <button type="button" class="btn cancel" onclick="closeForm()">
           Close

@@ -1,48 +1,62 @@
-window.onload = function() {
-  emailjs.init("5BiCDNRS3pOWRkn3f");
-
-  document.getElementById('contact-form').addEventListener('submit', function(event) {
-      let userEmail = document.getElementById('userEmail');
-      let userPhone = document.getElementById('userPhone');
-      let emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-      let phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
-      event.preventDefault();
-      let errorMessage = "Please enter a valid:\n";
-
-      if(!emailRegex.test(userEmail.value)){
-          errorMessage += " email address.\n";
-          console.log("Please enter a valid email address.");
-      }
-      if(!phoneRegex.test(userPhone.value)){
-          errorMessage += " phone number.\n";
-          console.log("Please enter a valid phone number.");
-      }
-      if(document.getElementById('userMessage').value.trim() == ""){
-          errorMessage += " message.\n";
-          console.log("Please enter a message.");
-      }
-      if(document.getElementById('userFirstName').value.trim() == ""){
-          errorMessage += " first name.\n";
-          console.log("Please enter a first name.");
-      }
-      if(document.getElementById('userLastName').value.trim() == ""){
-          errorMessage += " last name.\n";
-          console.log("Please enter a last name.");
-      }
-      if(!errorMessage == "Please enter a valid:\n"){
-          document.getElementById('error').innerHTML = errorMessage;
-      }
-      else{
-          emailjs.send("SuperSix","template_8njfjtu",this);
-          console.log("Email sent!");
-      }
-  });
-};
-
-function openForm() {
-    document.getElementById("myForm").style.display = "block";
-  }
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("contact-form");
+    const errorDiv = document.getElementById("error-message");
   
-  function closeForm() {
-    document.getElementById("myForm").style.display = "none";
-  }
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        errorDiv.innerHTML = ""; 
+  
+        const lname = document.getElementById("user_lname").value.trim();
+        const fname = document.getElementById("user_fname").value.trim();
+        const email = document.getElementById("user_email").value.trim();
+        const phone = document.getElementById("user_phone").value.trim();
+        const message = document.getElementById("user_message").value.trim();
+  
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const phoneRegex = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
+  
+        if (lname === "" || fname === "" || message === "") {
+            showError("Please fill in all required fields.");
+            return;
+        }
+  
+        else if (!emailRegex.test(email)) {
+            showError("Please enter a valid email address.");
+            return;
+        }
+  
+        else if (!phoneRegex.test(phone)) {
+            showError("Please enter a valid phone number (e.g., 123-456-7890).");
+            return;
+        }
+        else{
+            emailjs.init("5BiCDNRS3pOWRkn3f");
+  
+            const emailParams = {
+                user_lname: lname,
+                user_fname: fname,
+                user_email: email,
+                user_phone: phone,
+                user_message: message
+            };
+  
+            emailjs.send("SuperSix", "Super_Template", emailParams)
+                .then(function (response) {
+                    showError("Form submitted successfully!", "blue");
+                    form.reset();
+                })
+                .catch(function (error) {
+                    console.error("Email could not be sent:", error);
+                   
+                });
+            };
+  
+    });
+  
+    function showError(message, color = "red") {
+        errorDiv.style.color = color;
+        errorDiv.textContent = message;
+    }
+  
+  })
+  
