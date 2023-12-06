@@ -138,7 +138,10 @@ h1{
   background-color: white;
   overflow: hidden;
 }
-.piece{
+.piece {
   max-width: 100%;
   background-color: #eee;
+}
+.movable {
+  background-color: yellow;
 }
