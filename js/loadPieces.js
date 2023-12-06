@@ -26,13 +26,11 @@ function populate_grid(){
 }
 
 function addPieceToGrid(className, color, piece, id){
-    document.getElementsByClassName("grid")[0].innerHTML += `<div class="is-piece ` +  className + `" id="` + id + `"><img id="`+  id + `_` + color + `-` + piece + `.png" width="50px" height="50px" src="images/AIGenerated-pieces/` + color + `-` + piece + `.png" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)" ondrop="drop(event)">`; //there's only one grid
-    //document.getElementsByClassName("grid")[0].innerHTML += `<div class="is-piece ` + className + `" id="` + id + `" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)" ><img width="70px" height="70px" src="images/AIGenerated-pieces/` + color + `-` + piece + `.png" ondragover="allowDrop(event)">`; //there's only one grid
-
+    document.getElementsByClassName("grid")[0].innerHTML += `<div class="is-piece ` +  className + `" id="` + id + `" ondragover="allowDrop(event)" ondrop="drop(event, '`+id+`')"><img id="`+  id + `_` + color + `-` + piece + `.png" width="50px" height="50px" src="images/AIGenerated-pieces/` + color + `-` + piece + `.png" draggable="true" ondragstart="drag(event)" >`; //there's only one grid
 }
 
 function addBlankSpaceToGrid(className, id){
-    document.getElementsByClassName("grid")[0].innerHTML += `<div class="not-piece ` + className + `" id="` + id + `" ondragover="allowDrop(event)">`; //<img width="70px" height="70px" src="images/pixel-pieces/blank.png" ondragover="allowDrop(event)">`;
+    document.getElementsByClassName("grid")[0].innerHTML += `<div class="not-piece ` + className + `" id="` + id + `" ondragover="allowDrop(event)" ondrop="drop(event, '`+id+`')">`; //<img width="70px" height="70px" src="images/pixel-pieces/blank.png" ondragover="allowDrop(event)">`;
 }
 
 function addPawns(color){
