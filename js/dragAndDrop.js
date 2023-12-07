@@ -15,8 +15,8 @@ function allowDrop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
     var piece = document.getElementById(data);
-    console.log("*************************************");
-    console.log(ev.target);
+    //console.log("*************************************");
+    //console.log(ev.target);
     var item =  ev.target.firstElementChild; // element being dropped onto. If there is no piece, it is a div, if there is a piece there, it's ap piece
     console.log(item);
     if (item){
