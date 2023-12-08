@@ -26,11 +26,16 @@ function populate_grid(){
 }
 
 function addPieceToGrid(className, color, piece, id){
-    document.getElementsByClassName("grid")[0].innerHTML += `<div class="is-piece ` +  className + `" id="` + id + `" ondragover="allowDrop(event)" ondrop="drop(event, '`+id+`')"><img id="`+  id + `_` + color + `-` + piece + `.png" width="50px" height="50px" src="images/AIGenerated-pieces/` + color + `-` + piece + `.png" draggable="true" ondragstart="drag(event)" >`; //there's only one grid
-}
+    if (color === "white") { //black pieces start out as non-draggable
+        document.getElementsByClassName("grid")[0].innerHTML += `<div class="is-piece ` +  className + `" id="` + id + `" ondragover="allowDrop(event)" ondrop="drop(event, '`+id+`')"><img id="`+  id + `_` + color + `-` + piece + `.png" class='piece-img' width="50px" height="50px" src="images/AIGenerated-pieces/` + color + `-` + piece + `.png" draggable="true" ondragstart="drag(event)" >`;
+    } else {
+        document.getElementsByClassName("grid")[0].innerHTML += `<div class="is-piece ` +  className + `" id="` + id + `" ondragover="allowDrop(event)" ondrop="drop(event, '`+id+`')"><img id="`+  id + `_` + color + `-` + piece + `.png" class='piece-img' width="50px" height="50px" src="images/AIGenerated-pieces/` + color + `-` + piece + `.png" draggable="false" ondragstart="drag(event)" >`;
+    }
+
+    }
 
 function addBlankSpaceToGrid(className, id){
-    document.getElementsByClassName("grid")[0].innerHTML += `<div class="not-piece ` + className + `" id="` + id + `" ondragover="allowDrop(event)" ondrop="drop(event, '`+id+`')">`; //<img width="70px" height="70px" src="images/pixel-pieces/blank.png" ondragover="allowDrop(event)">`;
+    document.getElementsByClassName("grid")[0].innerHTML += `<div class="not-piece ` + className + `" id="` + id + `" ondragover="allowDrop(event)" ondrop="drop(event, '`+id+`')">`; 
 }
 
 function addPawns(color){

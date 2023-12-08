@@ -1,3 +1,24 @@
+var turn = "white";
+
+
+function changeTurn() {
+  console.log(turn, " is this");
+    if (turn === "white") {
+        turn = "black";
+    }
+    else {
+        turn = "white";
+    }
+    const pieces = document.getElementsByClassName("piece-img");
+    for (var i = 0; i < pieces.length; i++) {
+      console.log(pieces[i].id.slice(3,8));
+        if (pieces[i].id.slice(3,8) === turn) {
+            pieces[i].setAttribute("draggable", "true");
+        } else {
+          pieces[i].setAttribute("draggable", "false");
+        }
+    }
+}
 
 function allowDrop(event) {
     event.preventDefault();
@@ -10,12 +31,30 @@ function drag(event) {
     var movableSpaces = [];// list of spacese that the piece can be moved to
 
     if (piece =="black-pawn") {
-      if (/B[0-8]/.test(place[0]+place[1])) { // check if pawn has moved
-        movableSpaces = [String.fromCharCode(place[0].charCodeAt(0)+1)+place[1],
-          String.fromCharCode(place[0].charCodeAt(0)+2)+place[1]];
-      }
-      else {
+      //console.log(place);
+      if (!document.getElementById(String.fromCharCode(place[0].charCodeAt(0)+1)+place[1].firstElementChild) ) {
         movableSpaces = [String.fromCharCode(place[0].charCodeAt(0)+1)+place[1]];
+        if (/B[0-8]/.test(place[0]+place[1])) { // check if pawn has moved
+          if (!document.getElementById(String.fromCharCode(place[0].charCodeAt(0)+2)+place[1]).firstElementChild) {
+            movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)+2)+place[1]);
+          }
+        }
+      }
+      if (place[1] < 8) {
+        const moveToPieceR = document.getElementById(String.fromCharCode(place[0].charCodeAt(0)+1)+(place[1]*1 + 1).toString()).firstElementChild;
+        if (moveToPieceR !== null) {
+          if (moveToPieceR.id.slice(3, 8) !== event.target.id.slice(3, 8)) {
+            movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)+1)+(place[1]*1 + 1).toString());
+          }
+        }
+      }
+      if (place[1] > 1) {
+        const moveToPieceL = document.getElementById(String.fromCharCode(place[0].charCodeAt(0)+1)+(place[1] - 1).toString()).firstElementChild;
+        if (moveToPieceL !== null) {
+          if (moveToPieceL.id.slice(3, 8) !== event.target.id.slice(3, 8)) {
+            movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)+1)+(place[1] - 1).toString());
+          }
+        }
       }
     }
     if (piece =="black-king" || piece == "white-king") {
@@ -150,16 +189,30 @@ function drag(event) {
         String.fromCharCode(place[0].charCodeAt(0)-2)+(place[1]-1)];
     }
     if (piece =="white-pawn") {
-      console.log("black-pawn");
-      if (/G[1-8]/.test(place[0]+place[1])) { // check if pawn has moved
-        // list of spaces that the piece can be moved to
-        var movableSpaces = [String.fromCharCode(place[0].charCodeAt(0)-1)+place[1],
-          String.fromCharCode(place[0].charCodeAt(0)-2)+place[1]];
-        console.log(movableSpaces);
+      if (!document.getElementById(String.fromCharCode(place[0].charCodeAt(0)-1)+place[1].firstElementChild) ) {
+        movableSpaces = [String.fromCharCode(place[0].charCodeAt(0)-1)+place[1]];
+        if (/G[0-8]/.test(place[0]+place[1])) { // check if pawn has moved
+          if (!document.getElementById(String.fromCharCode(place[0].charCodeAt(0)-2)+place[1]).firstElementChild) {
+            movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)-2)+place[1]);
+          }
+        }
       }
-      else {
-        var movableSpaces = [String.fromCharCode(place[0].charCodeAt(0)-1)+place[1]];
-        console.log(movableSpaces);
+      if (place[1] < 8) {
+        console.log(String.fromCharCode(place[0].charCodeAt(0)-1)+(place[1] + 1).toString());
+        const moveToPieceR = document.getElementById(String.fromCharCode(place[0].charCodeAt(0)-1)+(place[1]*1 + 1).toString()).firstElementChild;
+        if (moveToPieceR !== null) {
+          if (moveToPieceR.id.slice(3, 8) !== event.target.id.slice(3, 8)) {
+            movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)-1)+(place[1]*1 + 1).toString());
+          }
+        }
+      }
+      if (place[1] > 1) {
+        const moveToPieceL = document.getElementById(String.fromCharCode(place[0].charCodeAt(0)-1)+(place[1]*1 - 1).toString()).firstElementChild;
+        if (moveToPieceL !== null) {
+          if (moveToPieceL.id.slice(3, 8) !== event.target.id.slice(3, 8)) {
+            movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)-1)+(place[1]*1 - 1).toString());
+          }
+        }
       }
     }
     console.log(movableSpaces);
@@ -188,6 +241,7 @@ function drag(event) {
 
 function drop(event, bucketID) {
     event.preventDefault();
+    event.stopPropagation();
     var data = event.dataTransfer.getData("text");
     var draggedElement = document.getElementById(data);
     console.log(bucketID);
@@ -199,9 +253,16 @@ function drop(event, bucketID) {
         //console.log(draggedElement,bucket);
         if (bucket.childElementCount > 0) {
           // Replace the existing image
+          const bucketChild = bucket.firstChild;
+          //console.log(bucket, bucketChild);
           bucket.removeChild(bucket.firstChild);
-          console.log(event.target);
-          addPieceToTakenSide(event.target);
+          //console.log(bucket);
+          //console.log(event.target);
+          addPieceToTakenSide(bucketChild);
+        }
+        console.log(bucketID, draggedElement.parentNode.id);
+        if (bucketID !==draggedElement.parentNode.id) {
+          changeTurn();
         }
         // Append the dragged image to the bucket
         bucket.appendChild(draggedElement);
@@ -209,13 +270,14 @@ function drop(event, bucketID) {
         bucket.classList.remove("not-piece");
         bucket.classList.add("is-piece");
     }
-
     removeMovable();
+    
   }
 function addPieceToTakenSide(piece){
     let takenColor = piece.id.slice(3,8); //Dictates side
     console.log(takenColor);
     piece.setAttribute("draggable", false) //Don't want to allow dragging while it's in the side
+    piece.classList.remove("piece-img")
     if (takenColor === "black"){
         document.getElementsByClassName("boardleft")[0].appendChild(piece);
     }
