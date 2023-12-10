@@ -96,9 +96,10 @@ app.post("/sign-up",  async(req, res) => {
   }
 });
 
-// app.get("/login", (req, res)=>{
-//   res.sendFile(path.join(__dirname + "/login.html"));
-// });
+
+app.get("/login", (req, res)=>{
+  res.sendFile(path.join(__dirname + "/login.html"));
+});
 
 // Logs in a user to the website
 app.post("/login", (req, res)=>{
