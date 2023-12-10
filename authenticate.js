@@ -77,8 +77,8 @@ app.get("/sign-up", (req, res)=>{
   res.sendFile(path.join(__dirname + "/register.html"));
 });
 //Post method for registering a user to the database
-app.post("/sign-up",  (req, res) => {
-  //Sends the file indexhtml under the sign up directory
+app.post("/sign-up",  async (req, res) => {
+  console.log("Registering....");
   const { emailAddress, password} = req.body;
   console.log("Email ", emailAddress);
   console.log("Password ", password);
@@ -88,25 +88,25 @@ app.post("/sign-up",  (req, res) => {
       res.status(400).json({ errors: [{ msg: "User already exists in our database!" }] });
     }
     else{
-      // //Matches the user via id and sees if it can find the id, if not found then register to db
-      // console.log("Going to register user!");
-      // let id = 0;
-      // let matchingId = false;
-      // do{
-      //   id++;
-      //   await User.findOne({ id: id }).exec().then(user => {
-      //   if (!user) matchingId = true;
-      //   })
-      // }
-      // while(!matchingId);
-      //Creates the new user object
-      //Inserts one collection into the database
-      connection.collection("User").insertOne({emailAddress, password, id});
-      //This code works, sends the file back to boardgame html page!
-      res.sendFile("boardgame.html", { root: "./"})
+      const newUser = new User({
+        emailAddress: req.body.emailAddress,
+        password: req.body.password
+      })
+      try{
+        console.log("Registering the user, with the email " + req.body.emailAddress + " and redirecting to boardgame page!");
+        const registerUser = await newUser.save();
+        res.status(200).json(registerUser);
+        //This code works, sends the file back to boardgame html page!
+        res.sendFile("boardgame.html", { root: "./"});
+      }
+      catch(error){
+        console.log("Error cannot register the email " + req.body.emailAddress);
+        res.status(400).json({message: error.message});
+      }
     }
   })
 });
+
 
 app.get("/login", (req, res)=>{
   res.sendFile(path.join(__dirname + "/login.html"));
