@@ -3,7 +3,6 @@ let responseForm = document.getElementById("nameform");
 
 document.addEventListener("DOMContentLoaded", function(){
     document.querySelector("form").addEventListener("submit", function(e){
-        e.preventDefault();
         let email = document.getElementById("user").value;
         let password = document.getElementById("password").value;
         //^^Grabs the form elements

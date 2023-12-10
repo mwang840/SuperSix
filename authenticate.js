@@ -63,16 +63,16 @@ const User = new mongoose.model("User", userSchema);
 
 
 
-app.get("/boardgame.html", (req, res) => {
-  res.sendFile(path.join(__dirname + "/boardgame.html"));
-});
+// app.get("/boardgame.html", (req, res) => {
+//   res.sendFile(path.join(__dirname + "/boardgame.html"));
+// });
 
 //Apparentally post methods dont work on res.sendFile (insert picardface palm emoji error)
 app.get("/sign-up", (req, res)=>{
   res.sendFile(path.join(__dirname + "/sign-up/register.html"));
 });
 //Post method for registering a user to the database
-app.post("/sign-up/register.html",  async(req, res) => {
+app.post("/sign-up",  async(req, res) => {
   //Sends the file indexhtml under the sign up directory
   console.log("Making a post request after signing up")
   const { emailAddress, password} = req.body;
@@ -80,8 +80,8 @@ app.post("/sign-up/register.html",  async(req, res) => {
   console.log("Password ", password);
   try{
     const existingUser = await User.findOne({emailAddress}).exec();
-    console.log("Email is ", user.emailAddress);
     if (existingUser) {
+      console.log("Email is ", existingUser.emailAddress);
       console.log("Error, that email is already taken!");
       return res.status(400).json({ errors: [{ msg: "User already exists in our database!" }] });
     }
@@ -96,14 +96,14 @@ app.post("/sign-up/register.html",  async(req, res) => {
   }
 });
 
-app.get("/login", (req, res)=>{
-  res.sendFile(path.join(__dirname + "/login.html"));
-});
+// app.get("/login", (req, res)=>{
+//   res.sendFile(path.join(__dirname + "/login.html"));
+// });
 
 // Logs in a user to the website
 app.post("/login", (req, res)=>{
   const {emailAddress, password, id} = req.body;
-  User.findOne({emailAddress:email}).exec().then((user)=>{
+  User.findOne({emailAddress}).exec().then((user)=>{
     if(user){
       if(password === user.password && id === user.id){
         res.send({user: user, message: " can login to the game"})
@@ -121,10 +121,10 @@ app.post("/login", (req, res)=>{
 
 
 //All get methods to get the information from all of the pages
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname + "/index.html"));
-  console.log("Express loads on main page!");
-});
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname + "/index.html"));
+//   console.log("Express loads on main page!");
+// });
 
 
 //Tells the server express is being used
