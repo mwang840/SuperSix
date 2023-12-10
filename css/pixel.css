@@ -106,3 +106,6 @@ ul.styleBar {
   background-color: #333;
   overflow: hidden;
 }
+.movable {
+  background-color: purple;
+}
