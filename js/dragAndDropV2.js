@@ -2,27 +2,40 @@ var turn = document.querySelector("body").getAttribute("turn");
 const vsAI = document.querySelector("body").getAttribute("vsAI");
 
 function changeTurn() {
-  aiTurn("black");
-  aiTurn("white");
   console.log(turn + "'s turn ended");
-    if (turn === "white") {
-      document.querySelector("body").setAttribute("turn", "black");
-      turn = "black";
-    }
-    else {
-      document.querySelector("body").setAttribute("turn", "white");
-      turn = "white";
-    }
-    const pieces = document.getElementsByClassName("piece-img");
+  if (turn === "white") {
+    document.querySelector("body").setAttribute("turn", "black");
+    turn = "black";
+  }
+  else {
+    document.querySelector("body").setAttribute("turn", "white");
+    turn = "white";
+  }
+  const pieces = document.getElementsByClassName("piece-img");
+  if (!vsAI) {
     for (var i = 0; i < pieces.length; i++) {
       console.log(pieces[i].id.slice(3,8));
-        if (pieces[i].id.slice(3,8) === turn) {
-            pieces[i].setAttribute("draggable", "true");
-        } else {
-          pieces[i].setAttribute("draggable", "false");
-        }
+      if (pieces[i].id.slice(3,8) === turn) {
+          pieces[i].setAttribute("draggable", "true");
+      } else {
+        pieces[i].setAttribute("draggable", "false");
+      }
     }
-}
+  } else {
+    for (var i = 0; i < pieces.length; i++) {
+      pieces[i].setAttribute("draggable", "false");
+    }
+    if (turn === "black") {
+      aiTurn("black");
+      for (var i = 0; i < pieces.length; i++) {
+        if (pieces[i].id.slice(3,8) === "white") {
+            pieces[i].setAttribute("draggable", "true");
+        }
+      }
+      turn = "white"  
+    }
+  }
+} 
 
 function allowDrop(event) {
   event.preventDefault();
@@ -353,18 +366,17 @@ function aiTurn(color) {
   }
   console.log("capture moves", captureMoves);
 // find the highest weight trade.
-  var mostPoints = 0;
-  var bestMove;
+  var mostPoints = -9;
+  var bestMove = [];
   const captureKeys = Object.keys(captureMoves); 
   if (captureKeys.length > 0) {
-    var mostPoints = -1;
-    var bestMove = [];
     for (var i = 0; i < captureKeys.length; i++) { //loop through the pieces that can capture
       console.log(captureKeys[i], captureMoves[captureKeys[i]], captureMoves[captureKeys[i]][0], document.getElementById(captureMoves[captureKeys[i]][0]).firstElementChild.id);
       var bestWeightForPiece = weights[document.getElementById(captureMoves[captureKeys[i]][0]).firstElementChild.id.slice(9, -4)];
       var bestMoveForPiece = captureMoves[captureKeys[i]][0];
+      //console.log(bestMoveForPiece, bestWeightForPiece);
       for (var k = 1; k < captureMoves[captureKeys[i]].length; k++) { //loop through the capturable pieces by a specific piece
-        if (weights[document.getElementById(captureMoves[captureKeys[i]][k]).firstElementChild.id.slice(9, -4)] >= bestMoveForPiece) { // check if it is a better trade
+        if (weights[document.getElementById(captureMoves[captureKeys[i]][k]).firstElementChild.id.slice(9, -4)] >= bestWeightForPiece) { // check if it is a better trade
           bestWeightForPiece = weights[document.getElementById(captureMoves[captureKeys[i]][k]).firstElementChild.id.slice(9, -4)];
           bestMoveForPiece = captureMoves[captureKeys[i]][k];
         }
@@ -379,6 +391,34 @@ function aiTurn(color) {
     }
   }
   console.log("best move is worth ", mostPoints, "and is: ", bestMove);
-// if no positive moves are available. trade the lowest point trade
-// if not captures. Move a pawn with higher priority on pawns towards the center.
+// if no positive moves are available, move a random piece
+  if (bestMove.length === 0) {
+    var moveKeys = Object.keys(moves);
+    moveKeys = moveKeys.filter( (key) => moves[key].length !== 0); //remove the keys that do not have a move
+    console.log(moves, moveKeys);
+    const randomPiece = Math.floor(Math.random() * moveKeys.length);
+    const randomMove = Math.floor(Math.random() * moves[moveKeys[randomPiece]].length);
+    console.log(randomPiece, randomMove);
+    bestMove = [moveKeys[randomPiece], moves[moveKeys[randomPiece]][randomMove]];
+    console.log(bestMove);
+  } 
+  var from = document.getElementById(bestMove[0]).firstElementChild;
+  var to = document.getElementById(bestMove[1]);
+  from.parentNode.classList.remove("is-piece");
+  from.parentNode.classList.add("not-piece");
+  // Check if the bucket already has an image
+  if (to.childElementCount > 0) {
+    // Replace the existing image
+    const bucketChild = to.firstChild;
+    //console.log(to, bucketChild);
+    to.removeChild(to.firstChild);
+    //console.log(to);
+    //console.log(from);
+    addPieceToTakenSide(bucketChild);
+  }
+  // Append the dragged image to the bucket
+  to.appendChild(from);
+  from.setAttribute("id", bestMove[1] +"_"+ from.id.slice(3,from.id.length));
+  to.classList.remove("not-piece");
+  to.classList.add("is-piece");
 }
