@@ -1,8 +1,8 @@
 var turn = document.querySelector("body").getAttribute("turn");
-const vsAI = document.querySelector("body").getAttribute("vsAI");
-
+const vsAI = document.querySelector("body").getAttribute("vsai") === "true";
+var checker = 0;
 function changeTurn() {
-  console.log(turn + "'s turn ended");
+  console.log("============" + turn + "'s turn ended ==========");
   if (turn === "white") {
     document.querySelector("body").setAttribute("turn", "black");
     turn = "black";
@@ -12,7 +12,39 @@ function changeTurn() {
     turn = "white";
   }
   const pieces = document.getElementsByClassName("piece-img");
+
   if (!vsAI) {
+    if (checker === 1) {
+      removeClass("checked");
+      checker = 0;
+    }
+    // check for check
+    var possibleCheckMoves;
+    if (turn === "black") {
+      possibleCheckMoves = findAllMoves("white")[1];
+    } else {
+      possibleCheckMoves = findAllMoves("black")[1];
+    }
+    const checkMoveKeys = Object.keys(possibleCheckMoves);
+    var doesCheck = [];
+    for (var i = 0; i < checkMoveKeys.length; i++) {
+      for (var k = 0; k < possibleCheckMoves[checkMoveKeys[i]].length; k++) {
+        if (document.getElementById(possibleCheckMoves[checkMoveKeys[i]][k]).firstElementChild.id.slice(9, -4) === "king") {
+          doesCheck.push(checkMoveKeys[i]);
+        }
+      }
+    }
+    if (doesCheck.length > 0) {
+      checker = 1;
+      console.log("these pieces put the  king in check", doesCheck);
+      doesCheck.forEach(function (id) {
+        var element = document.getElementById(id);
+        if (element) {
+          element.classList.add("checked");
+        }
+      });
+    }
+    //switch draggable pieces
     for (var i = 0; i < pieces.length; i++) {
       console.log(pieces[i].id.slice(3,8));
       if (pieces[i].id.slice(3,8) === turn) {
@@ -21,18 +53,66 @@ function changeTurn() {
         pieces[i].setAttribute("draggable", "false");
       }
     }
-  } else {
+  } else { // VS AI
     for (var i = 0; i < pieces.length; i++) {
       pieces[i].setAttribute("draggable", "false");
     }
-    if (turn === "black") {
-      aiTurn("black");
+    if (turn === "black") { // can update to be not player color if player can choose color
+      // checks for check
+      if (checker === 1) {
+        removeClass("checked");
+        checker = 0;
+      }
+      // check for check
+      var possibleCheckMoves;
+      if (turn === "black") {
+        possibleCheckMoves = findAllMoves("white")[1];
+      } else {
+        possibleCheckMoves = findAllMoves("black")[1];
+      }
+      var checkMoveKeys = Object.keys(possibleCheckMoves);
+      var doesCheck = [];
+      for (var i = 0; i < checkMoveKeys.length; i++) {
+        for (var k = 0; k < possibleCheckMoves[checkMoveKeys[i]].length; k++) {
+          if (document.getElementById(possibleCheckMoves[checkMoveKeys[i]][k]).firstElementChild.id.slice(9, -4) === "king") {
+            doesCheck.push(checkMoveKeys[i]);
+          }
+        }
+      }
+      if (doesCheck.length > 0) { // add highlight to checking pieces
+        checker = 1;
+        console.log("these pieces put the  king in check", doesCheck);
+        doesCheck.forEach(function (id) {
+          var element = document.getElementById(id);
+          if (element) {
+            element.classList.add("checked");
+          }
+        });
+      }
+
+      aiTurn("black"); // add parameter for checking pieces
+      // check the check here
+      removeClass("checked"); // reset the highlighted pieces
+      console.log(turn + "'s turn ended");
       for (var i = 0; i < pieces.length; i++) {
         if (pieces[i].id.slice(3,8) === "white") {
             pieces[i].setAttribute("draggable", "true");
         }
       }
-      turn = "white"  
+      // checks for check
+      possibleCheckMoves = findAllMoves(turn)[1];
+      checkMoveKeys = Object.keys(possibleCheckMoves);
+      var doesCheck = [];
+      for (var i = 0; i < checkMoveKeys.length; i++) {
+        for (var k = 0; k < possibleCheckMoves[checkMoveKeys[i]].length; k++) {
+          if (document.getElementById(possibleCheckMoves[checkMoveKeys[i]][k]).firstElementChild.id.slice(9, -4) === "king") {
+            doesCheck.push(checkMoveKeys[i]);
+          }
+        }
+      }
+      console.log("these pieces put the player's king in check", doesCheck);
+      //highlight those pieces
+      turn = "white"
     }
   }
 } 
@@ -89,7 +169,7 @@ function drop(event, bucketID) {
         changeTurn();
       }
   }
-  removeMovable();
+  removeClass("movable");
   }
 function addPieceToTakenSide(piece){
   let takenColor = piece.id.slice(3,8); //Dictates side
@@ -104,39 +184,41 @@ function addPieceToTakenSide(piece){
   }
 }
 
-function removeMovable(){
+function removeClass(classToRemove){
   //remove the movable class to return to original color
-  var elementsArray = document.querySelectorAll(".movable");
+  var elementsArray = document.querySelectorAll("."+classToRemove);
   elementsArray.forEach(function (element) {
-    element.classList.remove("movable");
+    element.classList.remove(classToRemove);
   });
 }
 
 function canMoveTo(piece, place, color) {
   var movableSpaces = [];// list of spacese that the piece can be moved to
   if (piece =="black-pawn") {
-    //console.log(place);
-    if (!document.getElementById(String.fromCharCode(place[0].charCodeAt(0)+1)+place[1]).firstElementChild) {
-      movableSpaces = [String.fromCharCode(place[0].charCodeAt(0)+1)+place[1]];
-      if (/B[0-8]/.test(place[0]+place[1])) { // check if pawn has moved
-        if (!document.getElementById(String.fromCharCode(place[0].charCodeAt(0)+2)+place[1]).firstElementChild) {
-          movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)+2)+place[1]);
+    if (place[0] === "H"){
+    } else {
+      if (!document.getElementById(String.fromCharCode(place[0].charCodeAt(0)+1)+place[1]).firstElementChild) {
+        movableSpaces = [String.fromCharCode(place[0].charCodeAt(0)+1)+place[1]];
+        if (/B[0-8]/.test(place[0]+place[1])) { // check if pawn has moved
+          if (!document.getElementById(String.fromCharCode(place[0].charCodeAt(0)+2)+place[1]).firstElementChild) {
+            movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)+2)+place[1]);
+          }
         }
       }
-    }
-    if (place[1] < 8) {
-      const moveToPieceR = document.getElementById(String.fromCharCode(place[0].charCodeAt(0)+1)+(place[1]*1 + 1).toString()).firstElementChild;
-      if (moveToPieceR !== null) {
-        if (moveToPieceR.id.slice(3, 8) !== color) {
-          movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)+1)+(place[1]*1 + 1).toString());
+      if (place[1] < 8) {
+        const moveToPieceR = document.getElementById(String.fromCharCode(place[0].charCodeAt(0)+1)+(place[1]*1 + 1).toString()).firstElementChild;
+        if (moveToPieceR !== null) {
+          if (moveToPieceR.id.slice(3, 8) !== color) {
+            movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)+1)+(place[1]*1 + 1).toString());
+          }
         }
       }
-    }
-    if (place[1] > 1) {
-      const moveToPieceL = document.getElementById(String.fromCharCode(place[0].charCodeAt(0)+1)+(place[1] - 1).toString()).firstElementChild;
-      if (moveToPieceL !== null) {
-        if (moveToPieceL.id.slice(3, 8) !== color) {
-          movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)+1)+(place[1] - 1).toString());
+      if (place[1] > 1) {
+        const moveToPieceL = document.getElementById(String.fromCharCode(place[0].charCodeAt(0)+1)+(place[1] - 1).toString()).firstElementChild;
+        if (moveToPieceL !== null) {
+          if (moveToPieceL.id.slice(3, 8) !== color) {
+            movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)+1)+(place[1] - 1).toString());
+          }
         }
       }
     }
@@ -273,27 +355,30 @@ function canMoveTo(piece, place, color) {
       String.fromCharCode(place[0].charCodeAt(0)-2)+(place[1]-1)];
   }
   if (piece =="white-pawn") {
-    if (!document.getElementById(String.fromCharCode(place[0].charCodeAt(0)-1)+place[1]).firstElementChild) {
-      movableSpaces = [String.fromCharCode(place[0].charCodeAt(0)-1)+place[1]];
-      if (/G[0-8]/.test(place[0]+place[1])) { // check if pawn has moved
-        if (!document.getElementById(String.fromCharCode(place[0].charCodeAt(0)-2)+place[1]).firstElementChild) {
-          movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)-2)+place[1]);
+    if (place[0] === "A") {
+    } else {
+      if (!document.getElementById(String.fromCharCode(place[0].charCodeAt(0)-1)+place[1]).firstElementChild) {
+        movableSpaces = [String.fromCharCode(place[0].charCodeAt(0)-1)+place[1]];
+        if (/G[0-8]/.test(place[0]+place[1])) { // check if pawn has moved
+          if (!document.getElementById(String.fromCharCode(place[0].charCodeAt(0)-2)+place[1]).firstElementChild) {
+            movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)-2)+place[1]);
+          }
         }
       }
-    }
-    if (place[1] < 8) {
-      const moveToPieceR = document.getElementById(String.fromCharCode(place[0].charCodeAt(0)-1)+(place[1]*1 + 1).toString()).firstElementChild;
-      if (moveToPieceR !== null) {
-        if (moveToPieceR.id.slice(3, 8) !== color) {
-          movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)-1)+(place[1]*1 + 1).toString());
+      if (place[1] < 8) {
+        const moveToPieceR = document.getElementById(String.fromCharCode(place[0].charCodeAt(0)-1)+(place[1]*1 + 1).toString()).firstElementChild;
+        if (moveToPieceR !== null) {
+          if (moveToPieceR.id.slice(3, 8) !== color) {
+            movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)-1)+(place[1]*1 + 1).toString());
+          }
         }
       }
-    }
-    if (place[1] > 1) {
-      const moveToPieceL = document.getElementById(String.fromCharCode(place[0].charCodeAt(0)-1)+(place[1]*1 - 1).toString()).firstElementChild;
-      if (moveToPieceL !== null) {
-        if (moveToPieceL.id.slice(3, 8) !== color) {
-          movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)-1)+(place[1]*1 - 1).toString());
+      if (place[1] > 1) {
+        const moveToPieceL = document.getElementById(String.fromCharCode(place[0].charCodeAt(0)-1)+(place[1]*1 - 1).toString()).firstElementChild;
+        if (moveToPieceL !== null) {
+          if (moveToPieceL.id.slice(3, 8) !== color) {
+            movableSpaces.push(String.fromCharCode(place[0].charCodeAt(0)-1)+(place[1]*1 - 1).toString());
+          }
         }
       }
     }
@@ -324,7 +409,7 @@ const weights = {
   queen: 9
 }
 
-function aiTurn(color) {
+function findAllMoves(color) {
   // pbject of pieces and where they can move
   var moves = {};
   const pieces = document.querySelectorAll(".is-piece");
@@ -336,7 +421,7 @@ function aiTurn(color) {
     }
   }
   console.log(correct_color_pieces);
-//loop through correct color pieces
+  //loop through correct color pieces
   for (var i = 0; i < correct_color_pieces.length; i++) {
     pieceIDLong = document.getElementById(correct_color_pieces[i]).querySelector("img");
     const place = [pieceIDLong.id.slice(0,1),pieceIDLong.id.slice(1,2)];
@@ -346,7 +431,7 @@ function aiTurn(color) {
     moves[place[0]+place[1]] = canMoveTo(piece, place, color); // add this result to an image.
   }
   console.log(moves);
-// make a list of pieces that black side can capture
+  // make a list of pieces that black side can capture
   var captureMoves = {}; // the pieces that can be captured stored as an object where the owned pieces are the keys and the values are a list of pieces that piece can capture
   const keys = Object.keys(moves);
   for (var i = 0; i < keys.length; i++) { //loop through keys
@@ -364,14 +449,27 @@ function aiTurn(color) {
       captureMoves[keys[i]] = captures; //add the capture moves to the object.
     }
   }
-  console.log("capture moves", captureMoves);
-// find the highest weight trade.
+  return [moves, captureMoves]; //returns all the moves that all the pieces matching the color parameter and all the moves that involve a capture
+}
+
+function aiTurn(color) {
+  const results = findAllMoves(color);
+  var moves = results[0];
+  var captureMoves = results[1];
+  console.log(moves, captureMoves);
+  // find the highest weight trade.
   var mostPoints = -9;
   var bestMove = [];
+  console.log("checker?", checker);
+  if (checker === 1) {
+    const checks = document.querySelectorAll(".checked").firstElementChild;
+    console.log(checks);
+    
+  }
   const captureKeys = Object.keys(captureMoves); 
   if (captureKeys.length > 0) {
     for (var i = 0; i < captureKeys.length; i++) { //loop through the pieces that can capture
-      console.log(captureKeys[i], captureMoves[captureKeys[i]], captureMoves[captureKeys[i]][0], document.getElementById(captureMoves[captureKeys[i]][0]).firstElementChild.id);
+      //console.log(captureKeys[i], captureMoves[captureKeys[i]], captureMoves[captureKeys[i]][0], document.getElementById(captureMoves[captureKeys[i]][0]).firstElementChild.id);
       var bestWeightForPiece = weights[document.getElementById(captureMoves[captureKeys[i]][0]).firstElementChild.id.slice(9, -4)];
       var bestMoveForPiece = captureMoves[captureKeys[i]][0];
       //console.log(bestMoveForPiece, bestWeightForPiece);
@@ -385,7 +483,7 @@ function aiTurn(color) {
       console.log();
       if (bestWeightForPiece - weights[document.getElementById(captureKeys[i]).firstElementChild.id.slice(9,-4)] > mostPoints) { // check if the best move for the specific piece is the best move so far
         mostPoints = bestWeightForPiece - weights[document.getElementById(captureKeys[i]).firstElementChild.id.slice(9,-4)];
-        console.log(captureKeys[i], bestMoveForPiece);
+        //console.log(captureKeys[i], bestMoveForPiece);
         bestMove = [captureKeys[i], bestMoveForPiece];
       }
     }
@@ -395,12 +493,12 @@ function aiTurn(color) {
   if (bestMove.length === 0) {
     var moveKeys = Object.keys(moves);
     moveKeys = moveKeys.filter( (key) => moves[key].length !== 0); //remove the keys that do not have a move
-    console.log(moves, moveKeys);
+    //console.log(moves, moveKeys);
     const randomPiece = Math.floor(Math.random() * moveKeys.length);
     const randomMove = Math.floor(Math.random() * moves[moveKeys[randomPiece]].length);
     console.log(randomPiece, randomMove);
     bestMove = [moveKeys[randomPiece], moves[moveKeys[randomPiece]][randomMove]];
-    console.log(bestMove);
+    //console.log(bestMove);
   } 
   var from = document.getElementById(bestMove[0]).firstElementChild;
   var to = document.getElementById(bestMove[1]);

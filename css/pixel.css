@@ -109,3 +109,6 @@ ul.styleBar {
 .movable {
   background-color: purple;
 }
+.checked {
+  background-color: blue;
+}

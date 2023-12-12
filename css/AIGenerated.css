@@ -145,3 +145,6 @@ h1{
 .movable {
   background-color: yellow;
 }
+.checked {
+  background-color: red;
+}

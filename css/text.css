@@ -81,11 +81,9 @@ h1{
   font-size: 15px;
   transition: 0.4s;
 }
-
 .active, .accordion:hover {
   background-color: #ccc; 
 }
-
 .panel {
   padding: 0 18px;
   display: none;
@@ -94,4 +92,7 @@ h1{
 }
 .movable {
   background-color: purple;
+}
+.checked {
+  background-color: red;
 }
