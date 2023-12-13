@@ -552,7 +552,7 @@ function aiTurn(color) {
 function preventCheck(captureKeys, captureMoves, moves) { // return mostPoints and bestMove
   const checks = document.querySelectorAll(".checked");
   var mostPoints = 0;
-  var bestMove = 0;
+  var bestMove = [0, 0];
   console.log(checks);
   console.log(checks.length);
   if (checks.length === 1) {
@@ -682,5 +682,5 @@ function preventCheck(captureKeys, captureMoves, moves) { // return mostPoints a
       }
     }
   }
-  return [0, 0];
+  return [mostPoints, bestMove];
 }
