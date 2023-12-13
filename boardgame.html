@@ -15,15 +15,17 @@
             <source src="audio/background.mp3">
         </audio>
     </head>
-    <body onload="populate_grid();">
+    <body onload="populate_grid();" turn="white" vsAI="false">
         <ul class="styleBar">
-            <li class="blank">Select a Theme:</li>
+            <li class="blank" id="AI-Button">vsAI!</li>
+            <li class="blank">Theme:</li>
             <li id="stylechange" onclick="changeSheet(0)">AIGenerated</li>
             <li id="stylechange" onclick="changeSheet(1)">Pixel</li>
             <li id="stylechange" onclick="changeSheet(2)">Professors</li>
             <li id="stylechange" onclick="changeSheet(3)">Text</li>
           </ul>
         <h1>Super Six</h1>
+        <button id="AI-Button">Click here to play vs AI!</button>
         <button class="accordion">Instructions</button>
         <div class="panel">
             <p>Welcome to Super Six Chess</p>

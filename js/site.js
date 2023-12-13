@@ -28,5 +28,15 @@ var changeSheet = function(style){
                 pieces[i].querySelector("img").setAttribute('SRC',"images/"+piece_styles[style]+piece_type);                
             }
         }
+        for (var i = 0; i < 2; i++) {
+            const side = (i === 0) ? ".boardleft" : ".boardright";
+            var capturedPieces = document.querySelector(side).querySelectorAll("img");
+            //console.log(capturedPieces);
+            for (var k = 0; k < capturedPieces.length; k++) {
+                var piece_type_src = capturedPieces[k].getAttribute('src');
+                var piece_type = piece_type_src.substring(piece_type_src.lastIndexOf('/'));
+                capturedPieces[k].setAttribute('SRC',"images/"+piece_styles[style]+piece_type);  
+            }
+        }
     }
 }
