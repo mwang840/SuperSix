@@ -12,12 +12,24 @@ function populate_grid(){
         } else if (k == 3) {
             row = "F";
         }
-        for (var l = 0; l < 8; l++){
-            if (l % 2 == 0){
-                addBlankSpaceToGrid("you", row + (l + 1).toString());
+        if (k % 2 === 1) {
+            for (var l = 0; l < 8; l++){
+                if (l % 2 == 0){
+                    addBlankSpaceToGrid("dee", row + (l + 1).toString());
+                }
+                else{
+                    addBlankSpaceToGrid("you", row + (l + 1).toString());
+                }
             }
-            else{
-                addBlankSpaceToGrid("dee", row + (l + 1).toString());
+        }
+        else {
+            for (var l = 0; l < 8; l++){
+                if (l % 2 == 0){
+                    addBlankSpaceToGrid("you", row + (l + 1).toString());
+                }
+                else{
+                    addBlankSpaceToGrid("dee", row + (l + 1).toString());
+                }
             }
         }
     }
@@ -42,10 +54,10 @@ function addPawns(color){
     for (var j = 0; j < 8; j++){
         if (color == "black") {
             if (j % 2 == 0){
-                addPieceToGrid("you", color, "pawn", 'B' + (j+1).toString());
+                addPieceToGrid("dee", color, "pawn", 'B' + (j+1).toString());
             }
             else {
-                addPieceToGrid("dee", color, "pawn", 'B' + (j+1).toString());
+                addPieceToGrid("you", color, "pawn", 'B' + (j+1).toString());
             }
         } else {
             if (j % 2 == 0){
@@ -70,10 +82,10 @@ function addChessPieces(color){
             } 
         } else {
             if (i % 2 == 0){
-                addPieceToGrid("you", color, pieces[i], 'H' + (i+1).toString());
+                addPieceToGrid("dee", color, pieces[i], 'H' + (i+1).toString());
             }
             else {
-                addPieceToGrid("dee", color, pieces[i], 'H' + (i+1).toString());
+                addPieceToGrid("you", color, pieces[i], 'H' + (i+1).toString());
             }
         }
     }

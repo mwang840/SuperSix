@@ -460,14 +460,32 @@ function aiTurn(color) {
   // find the highest weight trade.
   var mostPoints = -9;
   var bestMove = [];
+  const captureKeys = Object.keys(captureMoves);
   console.log("checker?", checker);
   if (checker === 1) {
-    const checks = document.querySelectorAll(".checked").firstElementChild;
+    const checks = document.querySelectorAll(".checked");
     console.log(checks);
-    
-  }
-  const captureKeys = Object.keys(captureMoves); 
-  if (captureKeys.length > 0) {
+    console.log(checks.length);
+    if (checks.length === 1) {
+      for (var i = 0; i < captureKeys.length; i++) {
+        for (var k = 0; k < captureMoves[captureKeys[i]].length; k++) {
+          console.log("hi");
+          if (captureMoves[captureKeys[i]][k] === checks[0].firstElementChild.id.slice(0,2)) {
+            console.log("can capture the one checker at: " + checks[0] + " with pieceo on " + captureKeys[i]);
+            mostPoints = 999;
+            bestMove = [captureKeys[i], captureMoves[captureKeys[i]][k]];
+          }
+        }  
+      }
+      if (mostPoints !== 999) {
+        // what it do if it cannot capture the checking piece.
+        //see if the king can get out of capture moves from white.
+      }
+    } else {
+      console.log("hi there this is not done yet : )")
+    }
+  } 
+  if (captureKeys.length > 0 && mostPoints !== 999) {
     for (var i = 0; i < captureKeys.length; i++) { //loop through the pieces that can capture
       //console.log(captureKeys[i], captureMoves[captureKeys[i]], captureMoves[captureKeys[i]][0], document.getElementById(captureMoves[captureKeys[i]][0]).firstElementChild.id);
       var bestWeightForPiece = weights[document.getElementById(captureMoves[captureKeys[i]][0]).firstElementChild.id.slice(9, -4)];
