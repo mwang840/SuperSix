@@ -273,7 +273,6 @@ function updateScore(piece) {
       break;
     default:
       break;
-
   }
 
 
