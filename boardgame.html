@@ -22,7 +22,6 @@
           </ul>
         <h1>Super Six</h1>
         <button class="accordion">Instructions</button>
-        <p>Score: </p>
         <div class="panel">
             <p>Welcome to Super Six Chess</p>
             <p>Two teams face each other to the death, and it is your job to lead your team to glory!</p>
@@ -31,11 +30,13 @@
             <p>Checkmate: If player 1 has cornered player 2's king and player 2 can't move their king out of danger, player 1 wins</p>
             <p>Stalemate: A stalemate happens when a player's king has no legal move to make, the game ends as a draw</p>
         </div>
-        <div>
-            <aside style="top: 100px;float: left;height: 100px; width: 100px;" class="boardleft"></aside>
+        <div style="top: 100px;float: left;height: 100px; width: 100px;" >
+            <p>Your Score: <span id="yourscore">0</span></p>
+            <aside class="boardleft"></aside>
         </div>
-        <div>        
-            <aside style="top: 100px;;float: right;height: 100px; width: 100px;" class="boardright"></aside>
+        <div style="top: 100px;;float: right;height: 100px; width: 100px;" > 
+            <p>Opponent Score: <span id="opscore">0</span></p>       
+            <aside class="boardright"></aside>
         </div>
         <div class="grid">
         </div>

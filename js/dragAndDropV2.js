@@ -209,15 +209,16 @@ function drop(event, bucketID) {
         bucket.classList.remove("not-piece");
         bucket.classList.add("is-piece");
     }
-
     removeMovable();
   }
 function addPieceToTakenSide(piece){
+    updateScore(piece);
+
     let takenColor = piece.id.slice(3,8); //Dictates side
     console.log(takenColor);
     piece.setAttribute("draggable", false) //Don't want to allow dragging while it's in the side
     if (takenColor === "black"){
-        document.getElementsByClassName("boardleft")[0].appendChild(piece);
+      document.getElementsByClassName("boardleft")[0].appendChild(piece);
     }
     else{
       document.getElementsByClassName("boardright")[0].appendChild(piece);
@@ -230,4 +231,70 @@ function removeMovable(){
     elementsArray.forEach(function (element) {
       element.classList.remove("movable");
     });
+}
+
+function updateScore(piece) {
+  //console.log("*************");
+  console.log("Update Score");
+  //console.log(piece.id.toString());
+  var p = getPieceType(piece);
+
+  var color = getPieceColor(piece);
+
+  var oldScore;
+
+  switch(color){
+    case "black":
+      oldScore =  parseInt(document.getElementById("yourscore").innerHTML);
+      break;
+    case "white":
+      oldScore =  parseInt(document.getElementById("opscore").innerHTML);
+      break;
+  }
+
+  if (oldScore === 0){
+    oldScore++;
+  }
+  switch(p){
+    case "pawn":
+      oldScore+=10;
+      break;
+    case "bishop":
+      oldScore= oldScore * 3;
+      break;
+    case "knight":
+      oldScore= oldScore * 4;
+      break;
+    case "rook":
+      oldScore= oldScore * 5;
+      break;
+    case "queen":
+      oldScore= oldScore * 10
+      break;
+    default:
+      break;
+
+  }
+
+
+  switch(color){
+    case "black":
+      document.getElementById("yourscore").innerHTML = oldScore;
+      break;
+    case "white":
+      document.getElementById("opscore").innerHTML = oldScore;
+      break;
+  }
+
+}
+
+function getPieceColor(piece){
+  return piece.id.split("-")[0].substring(3);
+}
+
+function getPieceType(piece){
+  console.log("Inside getPieceType");
+  var secondHalf = piece.id.split("-")[1];
+  var pieceType = secondHalf.substring(0, secondHalf.indexOf("."));
+  return pieceType;
 }

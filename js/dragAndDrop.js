@@ -89,6 +89,6 @@ function allowDrop(ev) {
     }
   }
 
-  function getPieceColor(id){
-    return id.split("-")[0].substring(3);
+  function getPieceColor(piece){
+    return piece.id.split("-")[0].substring(3);
   }
