@@ -36,7 +36,7 @@ function changeTurn() {
     }
     if (doesCheck.length > 0) {
       checker = 1;
-      console.log("these pieces put the  king in check", doesCheck);
+      console.log("these pieces put the king in check", doesCheck);
       doesCheck.forEach(function (id) {
         var element = document.getElementById(id);
         if (element) {
@@ -410,7 +410,7 @@ const weights = {
 }
 
 function findAllMoves(color) {
-  // pbject of pieces and where they can move
+  // object of pieces and where they can move
   var moves = {};
   const pieces = document.querySelectorAll(".is-piece");
   //console.log(pieces);
@@ -463,27 +463,9 @@ function aiTurn(color) {
   const captureKeys = Object.keys(captureMoves);
   console.log("checker?", checker);
   if (checker === 1) {
-    const checks = document.querySelectorAll(".checked");
-    console.log(checks);
-    console.log(checks.length);
-    if (checks.length === 1) {
-      for (var i = 0; i < captureKeys.length; i++) {
-        for (var k = 0; k < captureMoves[captureKeys[i]].length; k++) {
-          console.log("hi");
-          if (captureMoves[captureKeys[i]][k] === checks[0].firstElementChild.id.slice(0,2)) {
-            console.log("can capture the one checker at: " + checks[0] + " with pieceo on " + captureKeys[i]);
-            mostPoints = 999;
-            bestMove = [captureKeys[i], captureMoves[captureKeys[i]][k]];
-          }
-        }  
-      }
-      if (mostPoints !== 999) {
-        // what it do if it cannot capture the checking piece.
-        //see if the king can get out of capture moves from white.
-      }
-    } else {
-      console.log("hi there this is not done yet : )")
-    }
+    const prevention = preventCheck(captureKeys, captureMoves, moves);
+    mostPoints = prevention[0];
+    bestMove = prevention[1];
   } 
   if (captureKeys.length > 0 && mostPoints !== 999) {
     for (var i = 0; i < captureKeys.length; i++) { //loop through the pieces that can capture
@@ -537,4 +519,143 @@ function aiTurn(color) {
   from.setAttribute("id", bestMove[1] +"_"+ from.id.slice(3,from.id.length));
   to.classList.remove("not-piece");
   to.classList.add("is-piece");
+}
+
+function preventCheck(captureKeys, captureMoves, moves) { // return mostPoints and bestMove
+  const checks = document.querySelectorAll(".checked");
+  var mostPoints = 0;
+  var bestMove = 0;
+  console.log(checks);
+  console.log(checks.length);
+  if (checks.length === 1) {
+    for (var i = 0; i < captureKeys.length; i++) {
+      for (var k = 0; k < captureMoves[captureKeys[i]].length; k++) {
+        console.log("hi");
+        if (captureMoves[captureKeys[i]][k] === checks[0].firstElementChild.id.slice(0,2)) {
+          console.log("can capture the one checker at: " + checks[0] + " with piece on " + captureKeys[i]);
+          mostPoints = 999;
+          bestMove = [captureKeys[i], captureMoves[captureKeys[i]][k]];
+        }
+      }  
+    }
+  }
+  if (mostPoints !== 999) {
+    // Option 1 for what it does if it cannot capture the checking piece: move out of the way.
+    const kingLocations = document.querySelectorAll(".king");
+    var correctKingLocation;
+    for (var i = 0; i < 2; i++) {
+      if (kingLocations[i].id.slice(3,8) === "black") {
+        correctKingLocation = kingLocations[i].id.slice(0,2);
+      }
+    }
+    var kingOptions = canMoveTo("black-king", correctKingLocation, "black");
+    console.log(correctKingLocation, kingOptions);
+    // temporarily remove the king from the board
+    var kingSpot = document.getElementById(correctKingLocation);
+    var tempKing = kingSpot.firstElementChild;
+
+    kingSpot.classList.remove("is-piece");
+    kingSpot.classList.add("not-piece");
+    kingSpot.removeChild(tempKing);
+    // find all capturable moves from white side.
+    const whiteMovesWithoutBlackKing = findAllMoves("white")[0];
+    const whiteMoveKeys = Object.keys(whiteMovesWithoutBlackKing);
+    for (var i = 0; i < whiteMoveKeys.length; i++) {
+      kingOptions = kingOptions.filter( (place) => !whiteMovesWithoutBlackKing[whiteMoveKeys[i]].includes(place));
+    }
+    console.log(kingOptions);
+    //replace King
+    kingSpot.appendChild(tempKing);
+    kingSpot.classList.remove("not-piece");
+    kingSpot.classList.add("is-piece");
+    // make the move to avoid if it exists.
+    if (kingOptions.length > 0) {
+      mostPoints = 999;
+      bestMove = [correctKingLocation, kingOptions[0]];
+      console.log(bestMove);
+    }
+  }
+  if (mostPoints !== 999) {
+    //loop through pieces that are checking
+    console.log(checks);
+    const checkingPieces = Array.from(checks).map((piece) => piece.firstElementChild);
+    console.log(checkingPieces);
+    var dangerSquares = []; // will store all the tiles that all the checking pieces can move to
+    for (var i = 0; i < checkingPieces.length; i++) {
+      const place = [checkingPieces[i].id.slice(0,1),checkingPieces[i].id.slice(1,2)];
+      const piece = checkingPieces[i].id.slice(3,-4);
+      const color = checkingPieces[i].id.slice(3, 8);
+      dangerSquares = dangerSquares.concat(canMoveTo(piece, place, color));
+      console.log(dangerSquares);
+    }
+    const dangerSet = new Set(dangerSquares); //removes duplicates
+    console.log(dangerSet);
+    dangerSquares = Array.from(dangerSet); //convert back to array for easier manipulation
+    console.log(dangerSquares);
+    var moveKeys = Object.keys(moves);
+    moveKeys = moveKeys.filter( (key) => moves[key].length !== 0); //remove the keys that do not have a move
+    console.log(moveKeys, " ======= movekeys", moves);
+    for (var i = 0; i < moveKeys.length; i++) { // loop through the black pieces that can move
+      for (var k = 0; k < moves[moveKeys[i]].length; k++) { // loop through the pieces moves
+        if (dangerSquares.includes(moves[moveKeys[i]][k])) { // if piece 'i' can move into the path of a checking piece
+          var doesCheck = false;
+          //console.log(doesCheck);
+
+          // temporarily remove the piece from its spot
+          var iSpot = document.getElementById(moveKeys[i]);
+          var tempI = iSpot.firstElementChild;
+          iSpot.classList.remove("is-piece");
+          iSpot.classList.add("not-piece");
+          iSpot.removeChild(tempI);
+          // add the piece to the temp spot
+          var iTempSpot = document.getElementById(moves[moveKeys[i]][k]);
+          console.log(iTempSpot, moves[moveKeys[i]][k])
+          iTempSpot.classList.remove("not-piece");
+          iTempSpot.classList.add("is-piece");
+          iTempSpot.appendChild(tempI);
+
+          console.log(checkingPieces);
+          for (var j = 0; j < checkingPieces.length; j++) { // loop through the pieces that are checking and see if they still check
+            const place = [checkingPieces[j].id.slice(0,1),checkingPieces[j].id.slice(1,2)];
+            const piece = checkingPieces[j].id.slice(3,-4);
+            const color = checkingPieces[j].id.slice(3, 8);
+            var pieceIMoves = canMoveTo(piece, place, color);
+            //console.log(pieceIMoves);
+            for (var l = 0; l < pieceIMoves.length; l++) {
+              //console.log(pieceIMoves[l]);
+              if (document.getElementById(pieceIMoves[l]).firstElementChild !== null) {
+                if (document.getElementById(pieceIMoves[l]).firstElementChild.id.slice(9, -4) === "king") {
+                  doesCheck = true;
+                } else {
+                  bestMove = [moveKeys[i], pieceIMoves[l]];
+                  console.log(moveKeys[i], "moving to", pieceIMoves[l]);
+                }
+              }
+            }
+          }
+
+          // remove from the temp spot
+          iTempSpot.classList.add("not-piece");
+          iTempSpot.classList.remove("is-piece");
+          iTempSpot.removeChild(tempI);
+          //add back to OG spot
+          iSpot.classList.add("is-piece");
+          iSpot.classList.remove("not-piece");
+          iSpot.appendChild(tempI);
+
+          console.log(doesCheck);
+          if (!doesCheck) {
+            mostPoints = 999;
+            return [mostPoints, bestMove];
+          } else {
+            console.log("fail");
+          }
+        }
+      }
+    }
+    //check for pieces that can move into a space that the checking piece can move into.
+    //loop through potential moves into the path and check if the king is still checked.
+    // if a move is found that takes the king out of check, make it!
+  }
+  return [mostPoints, bestMove];
 }
