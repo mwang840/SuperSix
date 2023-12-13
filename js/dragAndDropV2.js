@@ -1,5 +1,9 @@
 var turn = document.querySelector("body").getAttribute("turn");
-const vsAI = document.querySelector("body").getAttribute("vsai") === "true";
+var vsAI = document.querySelector("body").getAttribute("vsai") === "true";
+document.getElementById("AI-Button").addEventListener("click", function() {
+  vsAI = true;
+  document.querySelector("body").setAttribute("vsai", "true");
+})
 var checker = 0;
 function changeTurn() {
   console.log("============" + turn + "'s turn ended ==========");
@@ -46,7 +50,7 @@ function changeTurn() {
     }
     //switch draggable pieces
     for (var i = 0; i < pieces.length; i++) {
-      console.log(pieces[i].id.slice(3,8));
+      //console.log(pieces[i].id.slice(3,8));
       if (pieces[i].id.slice(3,8) === turn) {
           pieces[i].setAttribute("draggable", "true");
       } else {
@@ -165,6 +169,16 @@ function drop(event, bucketID) {
       draggedElement.setAttribute("id", bucketID +"_"+ draggedElement.id.slice(3,draggedElement.length));
       bucket.classList.remove("not-piece");
       bucket.classList.add("is-piece");
+      if ((bucketID[0] === 'A'|| bucketID[0] === 'H')  && draggedElement.id.slice(9,13) === "pawn") {
+        var input = "";
+        while (input !== "rook" && input !== "bishop" && input !== "queen" && input !== "knight") {
+          input = prompt("please pick rook, knight, bishop, or queen");
+          input = input.toLowerCase();
+          console.log(input);
+        }
+        bucket.firstChild.setAttribute("id", bucketID + bucket.firstChild.id.slice(2,9) + input +".png");
+        bucket.firstChild.setAttribute("src",bucket.firstChild.getAttribute("src").slice(0,32)+ input +".png");
+      }
       if (change) {
         changeTurn();
       }
@@ -176,6 +190,7 @@ function addPieceToTakenSide(piece){
   //console.log(takenColor);
   piece.setAttribute("draggable", false) //Don't want to allow dragging while it's in the side
   piece.classList.remove("piece-img")
+  piece.setAttribute("id", piece.id +"side");
   if (takenColor === "black"){
     document.getElementsByClassName("boardleft")[0].appendChild(piece);
   }
@@ -420,7 +435,7 @@ function findAllMoves(color) {
       correct_color_pieces.push(pieces[i].getAttribute("id"));
     }
   }
-  console.log(correct_color_pieces);
+  //console.log(correct_color_pieces);
   //loop through correct color pieces
   for (var i = 0; i < correct_color_pieces.length; i++) {
     pieceIDLong = document.getElementById(correct_color_pieces[i]).querySelector("img");
@@ -430,7 +445,7 @@ function findAllMoves(color) {
     //console.log(piece, " ", place, " ", color);
     moves[place[0]+place[1]] = canMoveTo(piece, place, color); // add this result to an image.
   }
-  console.log(moves);
+  //console.log(moves);
   // make a list of pieces that black side can capture
   var captureMoves = {}; // the pieces that can be captured stored as an object where the owned pieces are the keys and the values are a list of pieces that piece can capture
   const keys = Object.keys(moves);
@@ -440,7 +455,7 @@ function findAllMoves(color) {
     for (var k = 0; k < moves[keys[i]].length; k++) { //loop through the spaces in each key
       //console.log("checking tile:", moves[keys[i]][k], document.getElementById(moves[keys[i]][k]).firstElementChild !== null, " which has ,", document.getElementById(moves[keys[i]][k]).firstElementChild);
       if (document.getElementById(moves[keys[i]][k]).firstElementChild !== null) {
-        console.log(moves[keys[i]][k]);
+        //console.log(moves[keys[i]][k]);
         captures.push(moves[keys[i]][k]);
       }
     }
@@ -456,7 +471,7 @@ function aiTurn(color) {
   const results = findAllMoves(color);
   var moves = results[0];
   var captureMoves = results[1];
-  console.log(moves, captureMoves);
+  //console.log(moves, captureMoves);
   // find the highest weight trade.
   var mostPoints = -9;
   var bestMove = [];
@@ -464,6 +479,11 @@ function aiTurn(color) {
   console.log("checker?", checker);
   if (checker === 1) {
     const prevention = preventCheck(captureKeys, captureMoves, moves);
+    if (prevention[0] === 0 && prevention[1] === 0) {
+      console.log(prevention);
+      alert("You have won! No way out of check.");
+      return;
+    }
     mostPoints = prevention[0];
     bestMove = prevention[1];
   } 
@@ -488,7 +508,9 @@ function aiTurn(color) {
       }
     }
   }
-  console.log("best move is worth ", mostPoints, "and is: ", bestMove);
+  if (bestMove.length !== 0) {
+    console.log("best move is worth ", mostPoints, "and is: ", bestMove);
+  }
 // if no positive moves are available, move a random piece
   if (bestMove.length === 0) {
     var moveKeys = Object.keys(moves);
@@ -496,7 +518,7 @@ function aiTurn(color) {
     //console.log(moves, moveKeys);
     const randomPiece = Math.floor(Math.random() * moveKeys.length);
     const randomMove = Math.floor(Math.random() * moves[moveKeys[randomPiece]].length);
-    console.log(randomPiece, randomMove);
+    //console.log(randomPiece, randomMove);
     bestMove = [moveKeys[randomPiece], moves[moveKeys[randomPiece]][randomMove]];
     //console.log(bestMove);
   } 
@@ -519,6 +541,12 @@ function aiTurn(color) {
   from.setAttribute("id", bestMove[1] +"_"+ from.id.slice(3,from.id.length));
   to.classList.remove("not-piece");
   to.classList.add("is-piece");
+  //pawn upgrades
+  //console.log(bestMove[1][0], from.id.slice(9,13));
+  if (bestMove[1][0] === 'H' && from.id.slice(9,13) === "pawn") {
+    to.firstChild.setAttribute("id", bestMove[1] +"_black-queen.png");
+    to.firstChild.setAttribute("src",to.firstChild.getAttribute("src").slice(0,32)+"queen.png");
+  }
 }
 
 function preventCheck(captureKeys, captureMoves, moves) { // return mostPoints and bestMove
@@ -653,9 +681,6 @@ function preventCheck(captureKeys, captureMoves, moves) { // return mostPoints a
         }
       }
     }
-    //check for pieces that can move into a space that the checking piece can move into.
-    //loop through potential moves into the path and check if the king is still checked.
-    // if a move is found that takes the king out of check, make it!
   }
-  return [mostPoints, bestMove];
+  return [0, 0];
 }
