@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="../css/signup.css">
   <script type="text/javascript" charset="utf-8" src="../js/site.js"></script>
   <link id="pagestyle" rel="stylesheet" type="text/css" href="../css/AIGenerated.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
   <ul class="styleBar">
@@ -21,7 +22,7 @@
         <button>Sign out</button>
     </div>
     <div>
-        <form id='nameform' action="/sign-up" method="post">
+      <form id='nameform' action="/sign-up" method="post">
             <div class='form-group'>
                 <label for='user'>
                   Email Address:
@@ -38,10 +39,9 @@
               <input id='id' name='id' type='text' class='form-control' placeholder="(1-9999)" autocomplete="off" required>
             </div> -->
             <!-- <button onclick="window.location.replace='https://mwang840.github.io/SuperSix/boardgame.html.'">Create Account</button> -->
-            <input type="submit" class="form-control" value="Create Account">      
-          </form>      
+            <input type="submit" class="form-control" value="Sign Up" id="submit">     
+        </form>
     </div>
     <script src="../js/validateForm.js"></script>
-    <script src="../authenticate.js"></script>
 </body>
 </html>

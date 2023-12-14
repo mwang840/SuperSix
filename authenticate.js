@@ -61,44 +61,39 @@ userSchema.methods.comparePassword = function (password) {
 //Sets up the user schema in the mongo database
 const User = new mongoose.model("User", userSchema);
 
-//All get methods to get the information from all of the pages
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname + "/index.html"));
-  console.log("Express loads on main page!");
-});
-7
 
-app.get("/boardgame.html", (req, res) => {
-  res.sendFile(path.join(__dirname + "/boardgame.html"));
-});
 
-//Apparentally post methods dont work on res.sendFile (insert picardface palm emoji error)
-app.get("/sign-up", (req, res)=>{
-  res.sendFile(path.join(__dirname + "/register.html"));
-});
+// app.get("/boardgame.html", (req, res) => {
+//   res.sendFile(path.join(__dirname + "/boardgame.html"));
+// });
+
+
 //Post method for registering a user to the database
-app.post("/sign-up",  (req, res) => {
+app.post("api/sign-up",  async(req, res) => {
   //Sends the file indexhtml under the sign up directory
+  console.log("Making a post request after signing up")
   const { emailAddress, password} = req.body;
   console.log("Email ", emailAddress);
   console.log("Password ", password);
-  User.findOne({emailAddress: emailAddress}).exec().then(async user=>{
-    if(user){
+  try{
+    const existingUser = await User.findOne({emailAddress}).exec();
+    if (existingUser) {
+      console.log("Email is ", existingUser.emailAddress);
       console.log("Error, that email is already taken!");
-      res.status(400).json({ errors: [{ msg: "User already exists in our database!" }] });
+      return res.status(400).json({ errors: [{ msg: "User already exists in our database!" }] });
     }
-    else{
-      // //Matches the user via id and sees if it can find the id, if not found then register to db
-      console.log("Going to register user!");
-      //Creates the new user object
-      //Inserts one collection into the database
-      
-      connection.collection("User").insertOne({emailAddress, password, id});
-      //This code works, sends the file back to boardgame html page!
-      res.sendFile("boardgame.html", { root: "./"})
-    }
-  })
+    const newUser = new User({ emailAddress, password });
+    console.log("Going to register user!");
+    await newUser.save();
+    res.sendFile("boardgame.html", { root: "./" });
+  }
+  catch (error){
+    console.error(error);
+    res.status(500).send('Internal server error');
+  }
+  res.status(200).send('Request processed successfully');
 });
+
 
 app.get("/login", (req, res)=>{
   res.sendFile(path.join(__dirname + "/login.html"));
@@ -107,11 +102,10 @@ app.get("/login", (req, res)=>{
 // Logs in a user to the website
 app.post("/login", (req, res)=>{
   const {emailAddress, password, id} = req.body;
-  User.findOne({emailAddress:email}).exec().then((user)=>{
+  User.findOne({emailAddress}).exec().then((user)=>{
     if(user){
       if(password === user.password && id === user.id){
-        res.send({user: user, message: " can login to the game"})
-        res.sendFile("boardgame.html", {root: "./"})
+        res.send({user: user, message: " can login to the game"});
       }
       else{
         res.send({user: user, message: " can not login to the game due to an incorrect password"})
@@ -122,6 +116,14 @@ app.post("/login", (req, res)=>{
     }
   })
 });
+
+
+//All get methods to get the information from all of the pages
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname + "/index.html"));
+//   console.log("Express loads on main page!");
+// });
+
 
 //Tells the server express is being used
 app.use("/", express.static(path.join(__dirname, "")));

@@ -1,9 +1,8 @@
 //grabs the form via the form idea in both register and login files
-let responseForm = document.getElementById("nameform");
+// let responseForm = document.getElementById("nameform");
 
 document.addEventListener("DOMContentLoaded", function(){
-    document.querySelector("form").addEventListener("submit", function(e){
-        e.preventDefault();
+    document.getElementById("submit").addEventListener("click", function(e){
         let email = document.getElementById("user").value;
         let password = document.getElementById("password").value;
         //^^Grabs the form elements
@@ -37,13 +36,48 @@ document.addEventListener("DOMContentLoaded", function(){
             e.preventDefault();
         }
         else{
-            console.log("Game will be load");
-            loadGame();
+            fetch("api/sign-up", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(content).then((response)=>{
+                    if(!response.ok){
+                        throw new Error("Bad network response");
+                    }
+                    return response.json();
+                }).then((data)=>{
+                    console.log("Loading the game");
+                    e.preventDefault();
+                    sendData(data)
+                }).catch((error)=>{
+                    console.log("Oops, there was an error processing the request. Here is the error", error)
+                })
+            })
         }
     })
 });
 
-function loadGame(){
-    console.log("Game is about to be loaded!");
-    window.location.href = "../boardgame.html"
+// function loadGame(){
+//     console.log("Game is about to be loaded!");
+//     window.location.href = "../boardgame.html"
+// }
+
+function sendData(content){
+    const xhr = new XMLHttpRequest();
+    const endpointUrl = "api/sign-up"
+    xhr.open("POST", endpointUrl, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4){
+            if(xhr.status === 200){
+                console.log("Loading the game");
+                window.location.href = "../boardgame.html";
+            }
+            else{
+                console.error("Oops, data cannot send", xhr.statusText);
+            }
+        }
+    }
+    xhr.send(JSON.stringify(content));
 }
