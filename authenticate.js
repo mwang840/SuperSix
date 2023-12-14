@@ -103,7 +103,7 @@ app.post("/api/login", (req, res)=>{
   const {emailAddress, password} = req.body;
   User.findOne({emailAddress}).exec().then((user)=>{
     if(user){
-      if(user.comparePassword(password)){
+      if(password === user.password && id === user.id){
         res.send({user: user, message: " can login to the game"});
       }
       else{
