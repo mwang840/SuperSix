@@ -90,13 +90,12 @@ app.post("/api/sign-up",  async(req, res) => {
     console.error(error);
     res.status(500).send('Internal server error');
   }
-  res.sendFile("boardgame.html", { root: "./" });
-  res.status(200).send('User can register successfully!');
+  res.redirect("/boardgame.html")
 });
 
 
 app.get("/login", (req, res)=>{
-  res.sendFile(path.join(__dirname + "/login.html"));
+  res.redirect("/login/login.html")
 });
 
 // Logs in a user to the website
@@ -104,8 +103,8 @@ app.post("/api/login", (req, res)=>{
   const {emailAddress, password} = req.body;
   User.findOne({emailAddress}).exec().then((user)=>{
     if(user){
-      if(password === user.password && id === user.id){
-        res.send({user: user, message: " can login to the game"});
+      if(user.comparePassword(password)){
+        res.redirect("/boardgame.html");
       }
       else{
         res.send({user: user, message: " can not login to the game due to an incorrect password"})
