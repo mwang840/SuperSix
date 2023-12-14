@@ -12,3 +12,4 @@ Firstly, fork this repo and save it wherever you'd like. After pulling it to you
 - Set up a mongo connection string in a **config.env** and name it (MONGO_URI) file to run the server code for user authentication
 - If using the method above, deploy by typing 'http-server' into the terminal (only for guest players).
 - Server side, run node authenticate.js for user registration and authentication
+- Created by Maxwell Wang, Jacob Marks, Arjun Manikyath, Matt Gwin
