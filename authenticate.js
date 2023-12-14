@@ -69,12 +69,11 @@ const User = new mongoose.model("User", userSchema);
 
 
 //Post method for registering a user to the database
-app.post("/sign-up",  async(req, res) => {
+app.post("/api/sign-up",  async(req, res) => {
   //Sends the file indexhtml under the sign up directory
   console.log("Making a post request after signing up")
   const { emailAddress, password} = req.body;
-  console.log("Email ", emailAddress);
-  console.log("Password ", password);
+  console.log("body = ", req.body);
   try{
     const existingUser = await User.findOne({emailAddress}).exec();
     if (existingUser) {
@@ -91,7 +90,7 @@ app.post("/sign-up",  async(req, res) => {
     console.error(error);
     res.status(500).send('Internal server error');
   }
-  res.status(200).send('Request processed successfully');
+  res.status(200).send('User can register successfully!');
 });
 
 
@@ -100,7 +99,7 @@ app.get("/login", (req, res)=>{
 });
 
 // Logs in a user to the website
-app.post("/login", (req, res)=>{
+app.post("/api/login", (req, res)=>{
   const {emailAddress, password} = req.body;
   User.findOne({emailAddress}).exec().then((user)=>{
     if(user){
