@@ -69,7 +69,7 @@ const User = new mongoose.model("User", userSchema);
 
 
 //Post method for registering a user to the database
-app.post("/sign-up",  async(req, res) => {
+app.post("api/sign-up",  async(req, res) => {
   //Sends the file indexhtml under the sign up directory
   console.log("Making a post request after signing up")
   const { emailAddress, password} = req.body;
@@ -101,10 +101,10 @@ app.get("/login", (req, res)=>{
 
 // Logs in a user to the website
 app.post("/login", (req, res)=>{
-  const {emailAddress, password} = req.body;
+  const {emailAddress, password, id} = req.body;
   User.findOne({emailAddress}).exec().then((user)=>{
     if(user){
-      if(user.comparePassword(password)){
+      if(password === user.password && id === user.id){
         res.send({user: user, message: " can login to the game"});
       }
       else{
