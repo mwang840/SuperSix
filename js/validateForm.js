@@ -36,48 +36,49 @@ document.addEventListener("DOMContentLoaded", function(){
             e.preventDefault();
         }
         else{
-            fetch("api/sign-up", {
+            fetch("/sign-up", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(content).then((response)=>{
-                    if(!response.ok){
-                        throw new Error("Bad network response");
-                    }
-                    return response.json();
-                }).then((data)=>{
-                    console.log("Loading the game");
-                    e.preventDefault();
-                    sendData(data)
-                }).catch((error)=>{
-                    console.log("Oops, there was an error processing the request. Here is the error", error)
-                })
+                body: JSON.stringify(content)
+            }).then((response)=>{
+                if(!response.ok){
+                    throw new Error("Bad network response");
+                }
+                return response.json();
+            }).then((data)=>{
+                console.log("Loading the game");
+                e.preventDefault();
+                loadGame();
+            }).catch((error)=>{
+                console.log("Oops, there was an error processing the request. Here is the error", error)
             })
+            
         }
     })
 });
 
-// function loadGame(){
-//     console.log("Game is about to be loaded!");
-//     window.location.href = "../boardgame.html"
-// }
-
-function sendData(content){
-    const xhr = new XMLHttpRequest();
-    const endpointUrl = "api/sign-up"
-    xhr.open("POST", endpointUrl, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function(){
-        if(xhr.readyState === 4){
-            if(xhr.status === 200){
-                console.log("Loading the game");
-                window.location.href = "../boardgame.html";
-            }
-            else{
-                console.error("Oops, data cannot send", xhr.statusText);
-            }
-        }
-    }
-    xhr.send(JSON.stringify(content));
+function loadGame(){
+    console.log("Game is about to be loaded!");
+    window.location.href = "../boardgame.html"
 }
+
+// function sendData(content){
+//     const xhr = new XMLHttpRequest();
+//     const endpointUrl = "api/sign-up"
+//     xhr.open("POST", endpointUrl, true);
+//     xhr.setRequestHeader("Content-Type", "application/json");
+//     xhr.onreadystatechange = function(){
+//         if(xhr.readyState === 4){
+//             if(xhr.status === 200){
+//                 console.log("Loading the game");
+//                 window.location.href = "../boardgame.html";
+//             }
+//             else{
+//                 console.error("Oops, data cannot send", xhr.statusText);
+//             }
+//         }
+//     }
+//     xhr.send(JSON.stringify(content));
+// }
