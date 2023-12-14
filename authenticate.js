@@ -85,7 +85,7 @@ app.post("api/sign-up",  async(req, res) => {
     const newUser = new User({ emailAddress, password });
     console.log("Going to register user!");
     await newUser.save();
-    res.sendFile("boardgame.html", { root: "./" });
+    // res.sendFile("boardgame.html", { root: "./" });
   }
   catch (error){
     console.error(error);
