@@ -84,12 +84,13 @@ app.post("/api/sign-up",  async(req, res) => {
     const newUser = new User({ emailAddress, password });
     console.log("Going to register user!");
     await newUser.save();
-    // res.sendFile("boardgame.html", { root: "./" });
+    
   }
   catch (error){
     console.error(error);
     res.status(500).send('Internal server error');
   }
+  res.sendFile("boardgame.html", { root: "./" });
   res.status(200).send('User can register successfully!');
 });
 
