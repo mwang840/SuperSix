@@ -104,7 +104,7 @@ h1{
 .panel {
   padding: 0 18px;
   display: none;
-  background-color: white;
+  background-color: rgb(25, 138, 190);
   overflow: hidden;
 }
 .movable {
