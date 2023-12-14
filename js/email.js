@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const message = document.getElementById("user_message").value.trim();
   
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        const phoneRegex = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
   
         if (lname === "" || fname === "" || message === "") {
             showError("Please fill in all required fields.");
@@ -22,11 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
   
         else if (!emailRegex.test(email)) {
             showError("Please enter a valid email address.");
-            return;
-        }
-  
-        else if (!phoneRegex.test(phone)) {
-            showError("Please enter a valid phone number (e.g., 123-456-7890).");
             return;
         }
         else{
@@ -40,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 user_message: message
             };
   
-            emailjs.send("SuperSix", "Super_Template", emailParams)
+            emailjs.send("service_9ppqirc", "PersonalWebsite", emailParams)
                 .then(function (response) {
                     showError("Form submitted successfully!", "blue");
                     form.reset();
@@ -59,4 +53,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   
   })
-  
