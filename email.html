@@ -1,58 +1,45 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Contact Form</title>
-    <link rel="stylesheet" href="css/email.css">
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
-    ></script>
-    <script src="js/email.js"></script>
+<html lang="en">
+
+<head>
+    <title>Challenge Your Friends!</title>
+    <link id="pagestyle" rel="stylesheet" type="text/css" href="css/email.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
-      (function(){
-          emailjs.init("5BiCDNRS3pOWRkn3f");
-      })();
-      </script>
-  </head>
-  <body>
-    <ul class="styleBar">
-      <li class="blank">Select a Theme:</li>
-      <li id="stylechange" onclick="changeSheet(0)">AIGenerated</li>
-      <li id="stylechange" onclick="changeSheet(1)">Pixel</li>
-      <li id="stylechange" onclick="changeSheet(2)">Professors</li>
-      <li id="stylechange" onclick="changeSheet(3)">Text</li>
-    </ul>
-    <!-- A button to open the popup form -->
-    <button class="open-button" onclick="openForm()">Open Form</button>
-    <!-- The form -->
-    <div class="form-popup" id="myForm">
-      <form id="contact-form" class="form-container">
-        <h1>Message</h1>
-        <label for="user_fname"><b>First Name</b></label>
-        <input
-          type="text"
-          placeholder="Enter first name"
-          id="user_fname"
-          required
-        />
-        <label for="user_lname"><b>First Name</b></label>
-        <input
-          type="text"
-          placeholder="Enter last name"
-          id="user_lname"
-          required
-        />
-        <label for="user_email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="user_email" required />
-        <label for="user_message">Message
-        <textarea id="user_message" name="user_message" rows="4" required></textarea>
-        </label>
-        <input type="text" placeholder="Enter Message" name="user_message" required />
-        <button type="submit" class="btn">Send</button>
-        <button type="button" class="btn cancel" onclick="closeForm()">
-          Close
-        </button>
-      </form>
+    (function(){
+        emailjs.init("5BiCDNRS3pOWRkn3f");
+    })();
+    </script>
+</head>
+<body>
+    <h1>Challenge a Friend!</h1>
+    <form id="contact-form">
+        <div class="form-group">
+            <label for="user_fname">First Name</label>
+            <input type="text" id="user_fname" name="user_fname" required>
+        </div>
+        <div class="form-group">
+            <label for="user_lname">Last Name</label>
+            <input type="text" id="user_lname" name="user_lname" required>
+        </div>
+        <div class="form-group">
+            <label for="user_email">Email Address</label>
+            <input type="email" id="user_email" name="user_email" required>
+        </div>
+        <div class="form-group">
+            <label for="user_phone">Phone Number</label>
+            <input type="tel" id="user_phone" name="user_phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+            <small>format: 123-456-7890</small>
+        </div>
+        <div class="form-group">
+            <label for="user_message">Message</label>
+            <textarea id="user_message" name="user_message" rows="4" required></textarea>
+        </div>
+        <div id="error-message" class="error-message"></div>
+        <button type="submit">Submit</button>
+    </form>
+    <script src="js/email.js"></script>
+    <div>
+      <a href="boardgame.html">Back to Game</a>
     </div>
-  </body>
-</html>
+</body>

@@ -34,6 +34,9 @@ ul.styleBar {
 .styleBar li:hover.blank {
   background-color: #333;
 }
+.styleBar li.blank {
+  width: 10%;
+}
 /*Found this code on how to make an n by n grid from this link. https://stackoverflow.com/questions/58572896/create-a-css-grid-with-nn-squares */
 .grid {
   margin-left: 32%;
@@ -81,17 +84,18 @@ h1{
   font-size: 15px;
   transition: 0.4s;
 }
-
 .active, .accordion:hover {
   background-color: #ccc; 
 }
-
 .panel {
   padding: 0 18px;
   display: none;
-  background-color: white;
+  background-color: rgb(191, 140, 102);
   overflow: hidden;
 }
 .movable {
   background-color: purple;
+}
+.checked {
+  background-color: red;
 }

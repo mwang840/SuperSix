@@ -67,17 +67,13 @@ const User = new mongoose.model("User", userSchema);
 //   res.sendFile(path.join(__dirname + "/boardgame.html"));
 // });
 
-//Apparentally post methods dont work on res.sendFile (insert picardface palm emoji error)
-app.get("/sign-up", (req, res)=>{
-  res.sendFile(path.join(__dirname + "/sign-up/register.html"));
-});
+
 //Post method for registering a user to the database
-app.post("/sign-up",  async(req, res) => {
+app.post("/api/sign-up",  async(req, res) => {
   //Sends the file indexhtml under the sign up directory
   console.log("Making a post request after signing up")
   const { emailAddress, password} = req.body;
-  console.log("Email ", emailAddress);
-  console.log("Password ", password);
+  console.log("body = ", req.body);
   try{
     const existingUser = await User.findOne({emailAddress}).exec();
     if (existingUser) {
@@ -88,27 +84,27 @@ app.post("/sign-up",  async(req, res) => {
     const newUser = new User({ emailAddress, password });
     console.log("Going to register user!");
     await newUser.save();
-    res.sendFile("boardgame.html", { root: "./" });
+    
   }
   catch (error){
     console.error(error);
     res.status(500).send('Internal server error');
   }
+  res.redirect("/boardgame.html")
 });
 
 
 app.get("/login", (req, res)=>{
-  res.sendFile(path.join(__dirname + "/login.html"));
+  res.redirect("/login/login.html")
 });
 
 // Logs in a user to the website
-app.post("/login", (req, res)=>{
-  const {emailAddress, password, id} = req.body;
+app.post("/api/login", (req, res)=>{
+  const {emailAddress, password} = req.body;
   User.findOne({emailAddress}).exec().then((user)=>{
     if(user){
-      if(password === user.password && id === user.id){
-        res.send({user: user, message: " can login to the game"})
-        res.sendFile("boardgame.html", {root: "./"})
+      if(user.comparePassword(password)){
+        res.redirect("/boardgame.html");
       }
       else{
         res.send({user: user, message: " can not login to the game due to an incorrect password"})

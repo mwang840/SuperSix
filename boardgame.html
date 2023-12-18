@@ -9,12 +9,28 @@
         <script type="text/javascript" charset="utf-8" defer src="js/site.js"></script>
         <script type="text/javascript" charset="utf-8" defer src="js/loadPieces.js"></script>
         <script type="text/javascript" charset="utf-8" defer src="js/dragAndDropV2.js"></script>
+        <script type="text/javascript" charset="utf-8" defer src="js/email.js"></script>
         <link id="pagestyle" rel="stylesheet" type="text/css" href="css/AIGenerated.css">
         <!--<link href="css/board.css">-->
+        <audio loop autoplay>
+            <source src="audio/background.mp3">
+        </audio>
+        <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+    (function(){
+        emailjs.init("5BiCDNRS3pOWRkn3f");
+    })();
+    </script>
+        <script>
+            (function(){
+                emailjs.init("5BiCDNRS3pOWRkn3f");
+            })();
+            </script>
     </head>
-    <body onload="populate_grid();">
+    <body onload="populate_grid();" turn="white" vsAI="false">
         <ul class="styleBar">
-            <li class="blank">Select a Theme:</li>
+            <li class="blank" id="AI-Button">vsAI!</li>
+            <li class="blank">Theme:</li>
             <li id="stylechange" onclick="changeSheet(0)">AIGenerated</li>
             <li id="stylechange" onclick="changeSheet(1)">Pixel</li>
             <li id="stylechange" onclick="changeSheet(2)">Professors</li>
@@ -37,6 +53,8 @@
             <aside style="top: 100px;;float: right;height: 100px; width: 100px;" class="boardright"></aside>
         </div>
         <div class="grid">
+        </div>
+        <a href="email.html">challenge</a>
         </div>
     </body>
 </html>
