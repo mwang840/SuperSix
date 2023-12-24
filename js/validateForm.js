@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function(){
                     }
                     return response.json();
                 }).then((data)=>{
-                    console.log("Loading the game");
+                    console.log("Loading the user pfp");
                     e.preventDefault();
                     sendData(data)
                 }).catch((error)=>{
@@ -71,8 +71,11 @@ function sendData(content){
     xhr.onreadystatechange = function(){
         if(xhr.readyState === 4){
             if(xhr.status === 200){
-                console.log("Loading the game");
-                window.location.href = "../boardgame.html";
+                var email = document.getElementById("user").value;
+                sessionStorage.setItem("email", email);
+                window.location.href = "../user-account/user_profile.html";
+                var displayName = sessionStorage.getItem("email");
+                document.getElementById('emailName').innerText = displayName;
             }
             else{
                 console.error("Oops, data cannot send", xhr.statusText);

@@ -17,16 +17,26 @@
         <ul class="profile">
             <li class="pfpLinks">
                 <div class="profile-Pic">
-                    <button class="options" onclick="viewOptions()"><img src="../images/profile pic.jpg" alt="ProfilePfp" class="profile-Pic" id="userPfp"></button>
+                   <img src="../images/profile pic.jpg" alt="ProfilePfp" class="profile-Pic" id="userPfp">
                 </div>
             </li>
             <li class="pfpLinks">
-               <a href="Edit Profile">Edit Profile</a>
+               <a href="/editprofile.html">Edit Profile</a>
             </li>
             <li class="pfpLinks">
                 <a href="Followers">Followers</a>
             </li>
+            <li class="pfpLinks">
+                <a href="My Score">My Score</a>
+            </li>
+            <li>
+                <a href="/logout">Sign Out</a>
+            </li>
         </ul>
-        <h1>Welcome, {user}</h1>
+        <div id="Welcome">
+        <h1>Welcome: <span id="emailName"></span></h1>
+        <h2>Feel free to explore the page!</h2>
+        </div>
+        <script src="../js/validateForm.js"></script>
     </body>
 </html>

@@ -4,15 +4,22 @@ const cors = require("cors");
 const path = require("path");
 const bcrypt = require("bcrypt");
 const morgan = require("morgan");
+const session = require("express-session");
 require("dotenv").config({ path: "./config.env" });
+require("dotenv").config({path: "./process.env"});
 
+//Setting up express
 const app = express();
 const port = 8080;
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(cors());
-
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}))
 
 mongoose.set("strictQuery", false);
 mongoose.connect(process.env.MONGO_URI, {
@@ -90,8 +97,9 @@ app.post("/api/sign-up",  async(req, res) => {
     console.error(error);
     res.status(500).send('Internal server error');
   }
-  res.redirect("/boardgame.html")
+  res.redirect("/user-account/user_profile.html")
 });
+
 
 
 app.get("/login", (req, res)=>{
@@ -104,9 +112,10 @@ app.post("/api/login", (req, res)=>{
   User.findOne({emailAddress}).exec().then((user)=>{
     if(user){
       if(user.comparePassword(password)){
-        res.redirect("/boardgame.html");
+        res.redirect("/user-account/user_profile.html");
       }
       else{
+        console.error("You can not login to the game due to an incorrect password");
         res.send({user: user, message: " can not login to the game due to an incorrect password"})
       }
     }
@@ -116,13 +125,20 @@ app.post("/api/login", (req, res)=>{
   })
 });
 
+app.get("/logout", (req, res)=>{
+    req.session.destroy((err)=>{
+      if (err) {
+        return res.status(500).send('Error logging out');
+      }
+      res.redirect('/index.html');
+    })
+})
 
-//All get methods to get the information from all of the pages
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname + "/index.html"));
-//   console.log("Express loads on main page!");
-// });
 
+// app.get("/user-account", (req, res)=>{
+//   const {emailAddress, password} = req.body;
+//   res.send("<h1>Welcome "+emailAddress+"!</h1>");
+// })
 
 //Tells the server express is being used
 app.use("/", express.static(path.join(__dirname, "")));
