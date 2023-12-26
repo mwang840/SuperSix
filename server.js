@@ -37,6 +37,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  userName:{
+    type:String,
+    required: true,
+    unique: true
+  },
   password:{
     type:String,
     required: true,
@@ -70,17 +75,12 @@ const User = new mongoose.model("User", userSchema);
 
 
 
-// app.get("/boardgame.html", (req, res) => {
-//   res.sendFile(path.join(__dirname + "/boardgame.html"));
-// });
-
 
 //Post method for registering a user to the database
 app.post("/api/sign-up",  async(req, res) => {
   //Sends the file indexhtml under the sign up directory
   console.log("Making a post request after signing up")
-  const { emailAddress, password} = req.body;
-  console.log("body = ", req.body);
+  const { emailAddress, userName, password} = req.body;
   try{
     const existingUser = await User.findOne({emailAddress}).exec();
     if (existingUser) {
@@ -88,7 +88,7 @@ app.post("/api/sign-up",  async(req, res) => {
       console.log("Error, that email is already taken!");
       return res.status(400).json({ errors: [{ msg: "User already exists in our database!" }] });
     }
-    const newUser = new User({ emailAddress, password });
+    const newUser = new User({ emailAddress, userName, password });
     console.log("Going to register user!");
     await newUser.save();
     
@@ -108,8 +108,8 @@ app.get("/login", (req, res)=>{
 
 // Logs in a user to the website
 app.post("/api/login", (req, res)=>{
-  const {emailAddress, password} = req.body;
-  User.findOne({emailAddress}).exec().then((user)=>{
+  const {emailAddress, userName, password} = req.body;
+  User.findOne({userName}).exec().then((user)=>{
     if(user){
       if(user.comparePassword(password)){
         res.redirect("/user-account/user_profile.html");
@@ -125,6 +125,7 @@ app.post("/api/login", (req, res)=>{
   })
 });
 
+//endpoint for logging out
 app.get("/logout", (req, res)=>{
     req.session.destroy((err)=>{
       if (err) {
@@ -133,6 +134,55 @@ app.get("/logout", (req, res)=>{
       res.redirect('/index.html');
     })
 })
+
+app.get("/editProfile", (req, res)=>{
+  res.redirect("/editProfile/editProfile.html");
+})
+
+//end point to change user account name
+// app.get('/editProfile/:username', (req, res) => {
+//   const username = req.params.username;
+
+//   // Fetch user details from MongoDB by username
+//   User.collection('users').findOne({ username: username }, (err, user) => {
+//     if (err) {
+//       console.error('Error trying to find the user', err);
+//       res.status(500).send('Internal Server Error');
+//       return;
+//     }
+
+//     if (!user) {
+//       res.status(404).send('User not found');
+//       return;
+//     }
+
+//     res.render('editProfile', { user });
+//   });
+// })
+
+app.post('/editProfile', (req, res) => {
+  const username = req.params.username;
+  //creates the collection from the database
+  const userCollection = User.collection('users');
+  // Update user details in MongoDB by username
+  userCollection.collection('users').updateOne(
+    { username: username },
+    (err, result) => {
+      if (err) {
+        console.error('Error updating user:', err);
+        res.status(500).send('Internal Server Error');
+        return;
+      }
+
+      if (result.modifiedCount === 0) {
+        res.status(404).send('User not found');
+        return;
+      }
+      console.log("User name is now", username);
+      res.redirect(`/user-account/user_profile.html`);
+    }
+  );
+});
 
 
 // app.get("/user-account", (req, res)=>{
