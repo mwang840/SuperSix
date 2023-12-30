@@ -11,6 +11,7 @@ require("dotenv").config({path: "./process.env"});
 //Setting up express
 const app = express();
 const port = 8080;
+app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(morgan("tiny"));
@@ -160,28 +161,28 @@ app.get("/editProfile", (req, res)=>{
 //   });
 // })
 
-app.post('/editProfile', (req, res) => {
-  const username = req.params.username;
+app.post('/editProfile/:userName', async(req, res) => {
+  //Grabs the username from the profile
+  const username = req.params["userName"];
+  console.log("Old username is ", username)
+  const newUserName = req.body;
+  console.log("New Username is ", newUserName);
   //creates the collection from the database
-  const userCollection = User.collection('users');
-  // Update user details in MongoDB by username
-  userCollection.collection('users').updateOne(
-    { username: username },
-    (err, result) => {
-      if (err) {
-        console.error('Error updating user:', err);
-        res.status(500).send('Internal Server Error');
+  try{
+    const updatedUser = await User.updateOne({
+      userName: username},
+      {$set: {userName: newUserName}});
+    if (result.modifiedCount === 0) {
+        res.status(404).send("Cannot find the user in the database");
         return;
-      }
-
-      if (result.modifiedCount === 0) {
-        res.status(404).send('User not found');
-        return;
-      }
-      console.log("User name is now", username);
-      res.redirect(`/user-account/user_profile.html`);
     }
-  );
+    console.log(`Username for ${oldUsername} updated to ${newUsername}`);
+    res.redirect(`/user-account/user_profile.html`);
+  }
+  catch(err){
+    console.error('Error updating the username:', err);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 

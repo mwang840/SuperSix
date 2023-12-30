@@ -36,7 +36,7 @@
             </li>
         </ul>
         <h1>Edit Profile</h1>
-        <form action="/editProfile" method="post">
+        <form id="editProfileForm" method="post">
             <div class='form-group'>
                 <label for="userName">
                     Change User Name:
@@ -45,5 +45,14 @@
             </div>
         <button type="submit">Save Changes</button>
     </form>
+    <script>
+        // Retrieve the username from the URL
+        const pathParts = window.location.pathname.split('/');
+        const username = pathParts[pathParts.length - 1];
+      
+        // Set the form action dynamically
+        document.getElementById('editProfileForm').action = `/editProfile/${username}`;
+      </script>
+
     </body>
 </html>
