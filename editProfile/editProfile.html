@@ -1,58 +1,67 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title> Edit Account</title>
-        <link rel="stylesheet" href="../css/userProfile.css">
-        <script type="text/javascript" charset="utf-8" src="../js/site.js"></script>
-        <link id="pagestyle" rel="stylesheet" type="text/css" href="../css/AIGenerated.css">
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    </head>
-    <body>
-        <ul class="styleBar">
-            <li class="blank">Select a Theme:</li>
-            <li id="stylechange" onclick="changeSheet(0)">AIGenerated</li>
-            <li id="stylechange" onclick="changeSheet(1)">Pixel</li>
-            <li id="stylechange" onclick="changeSheet(2)">Professors</li>
-            <li id="stylechange" onclick="changeSheet(3)">Text</li>
-        </ul>
-        <ul class="profile">
-            <li class="pfpLinks">
-                <div class="profile-Pic">
-                   <img src="../images/profile pic.jpg" alt="ProfilePfp" class="profile-Pic" id="userPfp">
-                </div>
-            </li>
-            <li class="pfpLinks">
-               <a href="../editProfile/editProfile.html">Edit Profile</a>
-            </li>
-            <li class="pfpLinks">
-                <a href="Followers">Followers</a>
-            </li>
-            <li class="pfpLinks">
-                <a href="My Score">My Score</a>
-            </li>
-            <li>
-                <a href="/logout">Sign Out</a>
-            </li>
-        </ul>
-        <h1>Edit Profile</h1>
-        <form id="editProfileForm" method="post">
-            <div class='form-group'>
-                <label for="userName">
-                    Change User Name:
-                    <input id='user' name='userName' type='text' class='form-control' placeholder="username" autocomplete="off" required>
-                  </label>
-            </div>
-        <button type="submit">Save Changes</button>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Edit Account</title>
+    <link rel="stylesheet" href="../css/userProfile.css" />
+    <script type="text/javascript" charset="utf-8" src="../js/site.js"></script>
+    <link
+      id="pagestyle"
+      rel="stylesheet"
+      type="text/css"
+      href="../css/AIGenerated.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  </head>
+  <body>
+    <ul class="styleBar">
+      <li class="blank">Select a Theme:</li>
+      <li id="stylechange" onclick="changeSheet(0)">AIGenerated</li>
+      <li id="stylechange" onclick="changeSheet(1)">Pixel</li>
+      <li id="stylechange" onclick="changeSheet(2)">Professors</li>
+      <li id="stylechange" onclick="changeSheet(3)">Text</li>
+    </ul>
+    <ul class="profile">
+      <li class="pfpLinks">
+        <div class="profile-Pic">
+          <img
+            src="../images/profile pic.jpg"
+            alt="ProfilePfp"
+            class="profile-Pic"
+            id="userPfp"
+          />
+        </div>
+      </li>
+      <li class="pfpLinks">
+        <a href="../editProfile/editProfile.html">Edit Profile</a>
+      </li>
+      <li class="pfpLinks">
+        <a href="Followers">Followers</a>
+      </li>
+      <li class="pfpLinks">
+        <a href="My Score">My Score</a>
+      </li>
+      <li>
+        <a href="/logout">Sign Out</a>
+      </li>
+    </ul>
+    <h1>Edit Profile</h1>
+    <form action="../editProfile" id="editProfileForm" method="post">
+      <div class="form-group">
+        <label for="userName">
+          Change User Name:
+          <input
+            id="user"
+            name="userName"
+            type="text"
+            class="form-control"
+            placeholder="username"
+            autocomplete="off"
+            required
+          />
+        </label>
+      </div>
+      <button type="submit">Save Changes</button>
     </form>
-    <script>
-        // Retrieve the username from the URL
-        const pathParts = window.location.pathname.split('/');
-        const username = pathParts[pathParts.length - 1];
-      
-        // Set the form action dynamically
-        document.getElementById('editProfileForm').action = `/editProfile/${username}`;
-      </script>
-
-    </body>
+  </body>
 </html>
