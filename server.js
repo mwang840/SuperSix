@@ -8,7 +8,7 @@ const session = require("express-session");
 require("dotenv").config({ path: "./config.env" });
 require("dotenv").config({ path: "./process.env" });
 
-//Setting up express
+//Setting up express and its
 const app = express();
 const port = 8080;
 app.set("view engine", "ejs");
@@ -27,6 +27,7 @@ app.use(
 // TODO: Add documentation for post/get/put methods
 // TODO: Investigate session issues, when I went to update my username, after refreshing the page or a form action error (posting to the wrong url), the session disappeared
 // TODO: Consolidate sections of the code to different sections
+
 
 mongoose.set("strictQuery", false);
 mongoose.connect(process.env.MONGO_URI, {
@@ -104,11 +105,26 @@ app.post("/api/sign-up", async (req, res) => {
   res.redirect("/user-account/user_profile.html");
 });
 
+/**
+ * GET
+ *
+ * Takes the user to the login page ensuring they get to the sign up page
+ *
+ * @param req - The client request, contains email address, username, and password
+ * @param res - The server response, indicating they can login into the page
+ */
 app.get("/login", (req, res) => {
   res.redirect("/login/login.html");
 });
 
-// Logs in a user to the website
+/**
+ * POST
+ *
+ * Logs in the user into the webpage, taking in the username and the password. Renders the user profile page if they are logged in, otherwise an error will occur if any of the two fields are incorrect
+ *
+ * @param req - The client request, contains username, and password
+ * @param res - The server response, indicating they can login into the page successfully
+ */
 app.post("/api/login", (req, res) => {
   const { emailAddress, userName, password } = req.body;
   User.findOne({ userName })
@@ -135,7 +151,14 @@ app.post("/api/login", (req, res) => {
     });
 });
 
-//endpoint for logging out
+/**
+ * GET
+ *
+ * Logs out the user of the webpage, taking them back to the main page of the game
+ *
+ * @param req - The client request, once the user clicks the "sign out button"
+ * @param res - The server response, indicating they can get back to the main page
+ */
 app.get("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
@@ -145,31 +168,27 @@ app.get("/logout", (req, res) => {
   });
 });
 
+
+/**
+ * GET
+ *
+ * Logs out the user of the webpage, taking them back to the main page of the game
+ *
+ * @param req - The client request, once the user clicks the "sign out button"
+ * @param res - The server response, indicating they can get back to the main page atfer logging off
+ */
 app.get("/editProfile", (req, res) => {
   res.redirect("/editProfile/editProfile.html");
 });
 
-//end point to change user account name
-// app.get('/editProfile/:username', (req, res) => {
-//   const username = req.params.username;
-
-//   // Fetch user details from MongoDB by username
-//   User.collection('users').findOne({ username: username }, (err, user) => {
-//     if (err) {
-//       console.error('Error trying to find the user', err);
-//       res.status(500).send('Internal Server Error');
-//       return;
-//     }
-
-//     if (!user) {
-//       res.status(404).send('User not found');
-//       return;
-//     }
-
-//     res.render('editProfile', { user });
-//   });
-// })
-
+/**
+ * POST
+ *
+ * Allows the user to edit their own profile, specifically their username
+ *
+ * @param req - The client request, once the user edits their username field
+ * @param res - The server response, indicating whether changing the username is a success or a failure
+ */
 app.post("/editProfile", async (req, res) => {
   const username = req.session.username;
   const newUsername = req.body["userName"];
@@ -193,10 +212,6 @@ app.post("/editProfile", async (req, res) => {
   }
 });
 
-// app.get("/user-account", (req, res)=>{
-//   const {emailAddress, password} = req.body;
-//   res.send("<h1>Welcome "+emailAddress+"!</h1>");
-// })
 
 //Tells the server express is being used
 app.use("/", express.static(path.join(__dirname, "")));
